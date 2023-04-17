@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -48,7 +49,8 @@ public class MenuViewManager {
         mainStage.setScene(mainScene);
         //createSubScenes();
         createButtons();
-        createBackground();
+        //createBackground();
+        loadBackground();
         //createLogo();
 
 
@@ -61,6 +63,29 @@ public class MenuViewManager {
                 BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
                 BackgroundPosition.DEFAULT, null);
         mainPane.setBackground(new Background(background));
+    }
+
+    private void loadBackground() {
+        // Load the image from a specific file
+        String imgBackground = ResourceFile.getInstance().getImagePath("menu.jpg");
+        Image galaxy = new Image(imgBackground, bounds.getWidth(), bounds.getHeight(), false, true, false);
+
+        // Painting the image
+        BackgroundImage imageView = new BackgroundImage(galaxy,
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER, null);
+
+        /*Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+
+        imageView.setImage(galaxy);
+        imageView.setX(bounds.getMinX());
+        imageView.setY(bounds.getMinY());
+        imageView.setFitWidth(bounds.getWidth());
+        imageView.setFitHeight(bounds.getHeight());*/
+
+        // Sets up picture background
+        mainPane.setBackground(new Background(imageView));
     }
 
     public Stage getMainStage() {
@@ -90,7 +115,7 @@ public class MenuViewManager {
             @Override
             public void handle(ActionEvent event) {
                 GameViewManager gameManager = new GameViewManager();
-                gameManager.createNewGame(mainStage);
+                gameManager.startGame(mainStage);
             }
         });
     }

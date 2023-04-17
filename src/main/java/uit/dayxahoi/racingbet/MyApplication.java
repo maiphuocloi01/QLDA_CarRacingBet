@@ -21,12 +21,13 @@ public class MyApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            /*MenuViewManager manager = new MenuViewManager();
+            MenuViewManager manager = new MenuViewManager();
             primaryStage = manager.getMainStage();
             primaryStage.setMaximized(true);
-            primaryStage.show();*/
-            GameViewManager gameManager = new GameViewManager();
-            gameManager.createNewGame(primaryStage);
+            primaryStage.setTitle("Racing Bet");
+            primaryStage.show();
+//            GameViewManager gameManager = new GameViewManager();
+//            gameManager.createNewGame(primaryStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
