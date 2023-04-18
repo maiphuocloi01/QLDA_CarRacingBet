@@ -60,6 +60,8 @@ public class GameViewManager {
     private DXHButton startButton = new DXHButton("Play");
     private DXHButton resetButton = new DXHButton("Reset");
 
+    private ImageView imgSelectLine = new ImageView();
+
     static final Integer STARTTIME = 3;
     static IntegerProperty timeSeconds = new SimpleIntegerProperty(STARTTIME);
     static Timeline timeline;
@@ -78,11 +80,9 @@ public class GameViewManager {
 
         loadBackground(mainPane);
         initView();
+        mainPane.getChildren().add(imgSelectLine);
         showDialog();
-        drawAllCar(false, paneRace);
-        //mainPane.getChildren().add(paneRace);
-        mainPane.getChildren().addAll(paneRacing, timerLabel);
-
+        drawAllCar(false);
     }
 
     public void startGame(Stage gameStage) {
@@ -104,6 +104,14 @@ public class GameViewManager {
         menuPanelBackground.setX(bounds.getMaxX() / 4);
         menuPanelBackground.setFitWidth(bounds.getWidth() / 2);
         menuPanelBackground.setFitHeight(2 * bounds.getHeight() / 3);
+
+        // Select line
+        String pathSelectLine = ResourceFile.getInstance().getImagePath("select_line.png");
+        Image imgLine = new Image(pathSelectLine, 1040, 88, false, true, false);
+        imgSelectLine.setImage(imgLine);
+        imgSelectLine.setY(-200);
+        imgSelectLine.setX(bounds.getMaxX() / 8);
+        //imgSelectLine.setFitHeight(2 * bounds.getHeight() / 3);
 
         // Combox chọn xe
         comboBox.setPromptText("Select Car");
@@ -145,6 +153,7 @@ public class GameViewManager {
                             @SuppressWarnings("rawtypes") ObservableValue observable,
                             Object oldValue, Object newValue) {
                         userChoice = newValue.toString();
+                        pickUpCarShowLine(userChoice);
                     }
                 });
 
@@ -167,9 +176,9 @@ public class GameViewManager {
         // Đếm thời gian bắt đầu
         timerLabel.textProperty().bind(timeSeconds.asString());
         timerLabel.setTextFill(Color.ORANGERED);
-        timerLabel.setLayoutX((5 * bounds.getMaxX() / 6) + 30);
-        timerLabel.setLayoutY((bounds.getMaxY() / 20) - 20);
-        timerLabel.setFont(Font.font("Impact", FontWeight.BOLD, 80));
+        timerLabel.setLayoutX((bounds.getMaxX() / 2) - 80);
+        timerLabel.setLayoutY((bounds.getMaxY() / 2) - 80);
+        timerLabel.setFont(Font.font("Impact", FontWeight.BOLD, 200));
 
         // StartButton Properties
         startButton.setLayoutX((bounds.getMaxX() / 4) + 50);
@@ -249,15 +258,15 @@ public class GameViewManager {
                                         break;
                                 }
                                 // Remove old pane
-                                paneRacing.getChildren().remove(paneRace);
+                                //paneRacing.getChildren().remove(paneRace);
 
                                 // Create a task to run the Thread that make
-                                Runnable race = new MakeRockets(mainPane, paneRace, finishedOrder);
+                                Runnable race = new MakeRockets(finishedOrder);
                                 threadRace = new Thread(race);
                                 threadRace.start(); // Start Thread
 
                                 // Add a new pane
-                                paneRacing.getChildren().add(paneRace);
+                                //paneRacing.getChildren().add(paneRace);
 
                                 // Create a task to run the Thread that post
                                 // the results of the race
@@ -308,17 +317,30 @@ public class GameViewManager {
                         threadRace.interrupt();
                         threadResult.interrupt();
 
-                        // Clear and Remove old Pane
-                        paneRacing.getChildren().clear();
-                        mainPane.getChildren().remove(paneRace);
-
-                        drawAllCar(false, paneRace);
-
-                        // Add a new Pane
-                        paneRacing.getChildren().addAll(paneRace);
+                        drawAllCar(false);
                     }
                 });
         // Add everything to the pane
+    }
+
+    private void pickUpCarShowLine(String pickUpCar) {
+        switch (pickUpCar) {
+            case "0":
+                imgSelectLine.setY(135);
+                break;
+            case "1":
+                imgSelectLine.setY(242);
+                break;
+            case "2":
+                imgSelectLine.setY(349);
+                break;
+            case "3":
+                imgSelectLine.setY(454);
+                break;
+            case "4":
+                imgSelectLine.setY(560);
+                break;
+        }
     }
 
 
@@ -392,34 +414,60 @@ public class GameViewManager {
         if (runing) {
             // Create a path
             Path path = new Path();
+            Path path2 = new Path();
             /*path.getElements().add(new MoveTo(50, 80 + centerY * 0.5));// where the problem may be
             path.getElements().add(new LineTo(bounds.getWidth() - 100, 80 + centerY * 0.5));*/
             path.getElements().add(new MoveTo(50, 25 + centerY * 0.5));// where the problem may be
-            path.getElements().add(new LineTo(bounds.getWidth() - 50, 25 + centerY * 0.5));
+            path.getElements().add(new LineTo((bounds.getWidth() / 2), 25 + centerY * 0.5));
             path.setVisible(false);
 
             // Create a PathTransition
             PathTransition pathTransition = new PathTransition();
             // speed
-            pathTransition.setDuration(Duration.millis(Math.random() * 2000 + 5000));
+            pathTransition.setDuration(Duration.millis(Math.random() * 5000 + 2000));
             pathTransition.setPath(path); // Set path to follow
             pathTransition.setNode(aux);
             pathTransition
                     .setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             pathTransition.play(); // Start Animation
-            // Create a EventHandler to know who finished the race and in what position.
+
             pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    finishOrder.add(rocketNum);
+                    path2.getElements().add(new MoveTo((bounds.getWidth() / 2) + 2, 25 + centerY * 0.5));// where the problem may be
+                    path2.getElements().add(new LineTo((bounds.getWidth()) - 50, 25 + centerY * 0.5));
+                    path2.setVisible(false);
+
+                    // Create a PathTransition
+                    PathTransition pathTransition2 = new PathTransition();
+                    // speed
+                    pathTransition2.setDuration(Duration.millis(Math.random() * 5000 + 500));
+                    pathTransition2.setPath(path2); // Set path to follow
+                    pathTransition2.setNode(aux);
+                    pathTransition2
+                            .setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+                    pathTransition2.play();
+                    // Create a EventHandler to know who finished the race and in what position.
+                    pathTransition2.setOnFinished(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            finishOrder.add(rocketNum);
+                        }
+                    });
                 }
             });
-            pane.getChildren().add(path);
+            pane.getChildren().addAll(path, path2);
         }
         pane.getChildren().add(aux);
     }
 
-    public void drawAllCar(boolean isRun, Group paneRace) {
+    public void drawAllCar(boolean isRun) {
+        if (!paneRace.getChildren().isEmpty()) {
+            System.out.println("reset button");
+            paneRace.getChildren().clear();
+            paneRacing.getChildren().clear();
+            mainPane.getChildren().remove(paneRacing);
+        }
         drawCar(paneRace, -5, 150, 0.6, 360,
                 Color.ORANGERED, finishedOrder, "1", isRun);
         drawCar(paneRace, -5, 255, 0.6, 360,
@@ -430,8 +478,9 @@ public class GameViewManager {
                 Color.MEDIUMPURPLE, finishedOrder, "4", isRun);
         drawCar(paneRace, -5, 575, 0.6, 360,
                 Color.DEEPSKYBLUE, finishedOrder, "5", isRun);
+        paneRacing.getChildren().add(paneRace);
+        mainPane.getChildren().add(paneRacing);
     }
-
 
 
     // The task that prints the results of the race
@@ -442,10 +491,13 @@ public class GameViewManager {
         String userChoice; // User ComboBox selection
         double bet; // User Bet amount
         Button resetButton; // Reset Button
+
         interface CompleteCallBack {
             void runSuccess();
+
             void runFailed();
         }
+
         CompleteCallBack callBack;
 
         // Construct a task with specific values
@@ -498,14 +550,12 @@ public class GameViewManager {
 
     class MakeRockets implements Runnable {
         Queue<String> finishedOrder; // Race Positions
-        Group pane; // Our Pane
 
         // Construct a task with specific values
-        public MakeRockets(Pane mainpane, Group pane, Queue<String> finishedOrder) {
+        public MakeRockets(Queue<String> finishedOrder) {
             this.finishedOrder = finishedOrder;
-            this.pane = pane;
-            //mainpane.getChildren().remove(paneDialog);
             hideDialog();
+            mainPane.getChildren().addAll(timerLabel);
         }
 
         // Tell Thread how to run
@@ -520,8 +570,9 @@ public class GameViewManager {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    pane.getChildren().clear(); // Clear old pane
-                    drawCar(pane, -5, 150, 0.6, 360, Color.ORANGERED,
+                    drawAllCar(true);
+                    mainPane.getChildren().remove(timerLabel);
+                    /*drawCar(pane, -5, 150, 0.6, 360, Color.ORANGERED,
                             finishedOrder, "0", true);
                     drawCar(pane, -5, 255, 0.6, 360, Color.DEEPPINK,
                             finishedOrder, "1", true);
@@ -530,7 +581,7 @@ public class GameViewManager {
                     drawCar(pane, -5, 465, 0.6, 360, Color.MEDIUMPURPLE,
                             finishedOrder, "3", true);
                     drawCar(pane, -5, 575, 0.6, 360, Color.DEEPSKYBLUE,
-                            finishedOrder, "4", true);
+                            finishedOrder, "4", true);*/
                 }
             });
         }
