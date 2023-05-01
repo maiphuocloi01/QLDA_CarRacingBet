@@ -9,8 +9,5 @@
         <module name="RacingBet" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="RacingBet" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>
