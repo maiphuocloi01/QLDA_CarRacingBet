@@ -107,7 +107,7 @@ public class GameViewManager {
 
         // Select line
         String pathSelectLine = ResourceFile.getInstance().getImagePath("select_line.png");
-        Image imgLine = new Image(pathSelectLine, 1040, 88, false, true, false);
+        Image imgLine = new Image(pathSelectLine, 1140, 88, false, true, false);
         imgSelectLine.setImage(imgLine);
         imgSelectLine.setY(-200);
         imgSelectLine.setX(bounds.getMaxX() / 8);
@@ -326,19 +326,19 @@ public class GameViewManager {
     private void pickUpCarShowLine(String pickUpCar) {
         switch (pickUpCar) {
             case "0":
-                imgSelectLine.setY(135);
+                imgSelectLine.setY(145);
                 break;
             case "1":
-                imgSelectLine.setY(242);
+                imgSelectLine.setY(273);
                 break;
             case "2":
-                imgSelectLine.setY(349);
+                imgSelectLine.setY(390);
                 break;
             case "3":
-                imgSelectLine.setY(454);
+                imgSelectLine.setY(507);
                 break;
             case "4":
-                imgSelectLine.setY(560);
+                imgSelectLine.setY(625);
                 break;
         }
     }
@@ -468,15 +468,15 @@ public class GameViewManager {
             paneRacing.getChildren().clear();
             mainPane.getChildren().remove(paneRacing);
         }
-        drawCar(paneRace, -5, 150, 0.6, 360,
+        drawCar(paneRace, -5, 170, 0.6, 360,
                 Color.ORANGERED, finishedOrder, "1", isRun);
-        drawCar(paneRace, -5, 255, 0.6, 360,
+        drawCar(paneRace, -5, 295, 0.6, 360,
                 Color.DEEPPINK, finishedOrder, "2", isRun);
-        drawCar(paneRace, -5, 360, 0.6, 360,
+        drawCar(paneRace, -5, 410, 0.6, 360,
                 Color.GREENYELLOW, finishedOrder, "3", isRun);
-        drawCar(paneRace, -5, 465, 0.6, 360,
+        drawCar(paneRace, -5, 535, 0.6, 360,
                 Color.MEDIUMPURPLE, finishedOrder, "4", isRun);
-        drawCar(paneRace, -5, 575, 0.6, 360,
+        drawCar(paneRace, -5, 650, 0.6, 360,
                 Color.DEEPSKYBLUE, finishedOrder, "5", isRun);
         paneRacing.getChildren().add(paneRace);
         mainPane.getChildren().add(paneRacing);

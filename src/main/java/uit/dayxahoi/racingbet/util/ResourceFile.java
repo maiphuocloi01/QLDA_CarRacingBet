@@ -37,4 +37,14 @@ public class ResourceFile {
         String path = "font/" + fontName;
         return MyApplication.class.getResource(path);
     }
+
+    public String getSoundPath(String imageName) {
+        String path = "sound/" + imageName;
+        return Objects.requireNonNull(MyApplication.class.getResource(path)).toString();
+    }
+
+    public URL getSoundURL(String imageName) {
+        String path = "sound/" + imageName;
+        return MyApplication.class.getResource(path);
+    }
 }

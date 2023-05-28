@@ -2,6 +2,7 @@ module uit.dayxahoi.racingbet {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires javafx.media;
 
 
     opens uit.dayxahoi.racingbet to javafx.fxml;
@@ -12,4 +13,6 @@ module uit.dayxahoi.racingbet {
     opens uit.dayxahoi.racingbet.view to javafx.fxml;
     exports uit.dayxahoi.racingbet.controller;
     opens uit.dayxahoi.racingbet.controller to javafx.fxml;
+    exports uit.dayxahoi.racingbet.minigame;
+    opens uit.dayxahoi.racingbet.minigame to javafx.fxml;
 }

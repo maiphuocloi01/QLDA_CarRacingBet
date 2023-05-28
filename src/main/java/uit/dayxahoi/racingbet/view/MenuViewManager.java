@@ -134,14 +134,15 @@ public class MenuViewManager {
     }
 
     private void createSettingButton() {
-        DXHButton settingButton = new DXHButton("SETTING");
+        DXHButton settingButton = new DXHButton("MINI GAME");
         addMenuButtons(settingButton);
 
         settingButton.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                //showSubScene(shipChooserSubscene);
+                MiniGameViewManager gameManager = new MiniGameViewManager();
+                gameManager.startGame(mainStage);
             }
         });
     }
