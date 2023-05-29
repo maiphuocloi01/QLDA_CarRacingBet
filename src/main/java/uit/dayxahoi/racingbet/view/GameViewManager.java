@@ -60,6 +60,10 @@ public class GameViewManager {
     private DXHButton startButton = new DXHButton("Play");
     private DXHButton resetButton = new DXHButton("Reset");
 
+    private String free = ResourceFile.getInstance().getImagePath("exit.png");
+    private String press = ResourceFile.getInstance().getImagePath("exit_pressed.png");
+    private DXHButton exitButton = new DXHButton(free, press);
+
     private ImageView imgSelectLine = new ImageView();
 
     static final Integer STARTTIME = 3;
@@ -76,6 +80,8 @@ public class GameViewManager {
     double bet;
     String userChoice;
 
+    private Stage mainStage;
+
     public GameViewManager() {
 
         loadBackground(mainPane);
@@ -86,13 +92,14 @@ public class GameViewManager {
     }
 
     public void startGame(Stage gameStage) {
+        mainStage = gameStage;
         AnchorPane gamePane = new AnchorPane();
         Scene gameScene = new Scene(gamePane, GAME_WIDTH, GAME_HEIGHT);
-        gameStage.setScene(gameScene);
+        mainStage.setScene(gameScene);
         Scene scene = new Scene(mainPane, GAME_WIDTH, GAME_HEIGHT);
-        gameStage.setScene(scene);
-        gameStage.setMaximized(true);
-        gameStage.show();
+        mainStage.setScene(scene);
+        mainStage.setMaximized(true);
+        mainStage.show();
     }
 
     private void initView() {
@@ -187,6 +194,21 @@ public class GameViewManager {
         // ResetButton Properties
         resetButton.setLayoutX((2 * bounds.getMaxX() / 4) + 100);
         resetButton.setLayoutY((4 * bounds.getMaxY() / 6) + 10);
+
+        // Exit button
+        exitButton.setLayoutY(bounds.getMaxY() / 15);
+        exitButton.setLayoutX(11*bounds.getMaxX() / 12);
+        //exitButton.setFitWidth(bounds.getWidth() / 2);
+        //exitButton.setFitHeight(2 * bounds.getHeight() / 3);
+
+        exitButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //mainStage.close();
+                MenuViewManager manager = new MenuViewManager();
+                manager.backMenu(mainStage);
+            }
+        });
 
         startButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 new EventHandler<MouseEvent>() {
@@ -347,7 +369,7 @@ public class GameViewManager {
     private void showDialog() {
         if (paneDialog.getChildren().isEmpty()) {
             paneDialog.getChildren().addAll(menuPanelBackground, comboBox, startButton, resetButton,
-                    textField, instructionLabel, changingLabel);
+                    textField, instructionLabel, changingLabel, exitButton);
             mainPane.getChildren().add(paneDialog);
         }
     }
