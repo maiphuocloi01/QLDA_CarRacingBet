@@ -1,0 +1,11 @@
+.tab-header-area .tab:selected .tab-label {
+    -fx-text-fill: white; /* Màu chữ trắng cho tab đang được chọn */
+}
+
+.tab-header-background {
+    -fx-background-color: rgba(150, 111, 51, 0.8); /* Màu nâu đậm và độ trong suốt */
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: black;
+}
