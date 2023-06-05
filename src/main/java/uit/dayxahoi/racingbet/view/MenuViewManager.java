@@ -94,15 +94,11 @@ public class MenuViewManager {
 
     public void backMenu(Stage stage) {
         mainStage = stage;
-        mainStage.close();
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
-        mainStage = new Stage();
         mainStage.setScene(mainScene);
-        //createSubScenes();
         createButtons();
-        //createBackground();
         loadBackground();
         mainStage.setMaximized(true);
         mainStage.show();
