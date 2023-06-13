@@ -28,9 +28,12 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import uit.dayxahoi.racingbet.model.DXHButton;
+import uit.dayxahoi.racingbet.model.User;
 import uit.dayxahoi.racingbet.util.ResourceFile;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class GameViewManager {
@@ -39,8 +42,11 @@ public class GameViewManager {
     private static final Rectangle2D bounds = screen.getVisualBounds();
     private static final double GAME_WIDTH = bounds.getWidth();
     private static final double GAME_HEIGHT = bounds.getHeight();
-    private final ObservableList<String> options = FXCollections.observableArrayList(
-            "RED", "PINK", "GREEN", "PURPLE", "BLUE");
+    private final ObservableList<String> options = FXCollections.observableArrayList("1ST", "2ND", "3RD", "4TH", "5TH");
+
+    private final ObservableList<String> optionsMap = FXCollections.observableArrayList("1ST", "2ND", "3RD");
+
+    private final ObservableList<String> optionsSkin = FXCollections.observableArrayList("1ST", "2ND", "3RD");
 
     //Parent
     private final Pane mainPane = new Pane();
@@ -53,10 +59,16 @@ public class GameViewManager {
     //View
     private ImageView menuPanelBackground = new ImageView();
     private ComboBox<String> comboBox = new ComboBox<>(options);
+    private ComboBox<String> comboBoxMap = new ComboBox<>(optionsMap);
+    private ComboBox<String> comboBoxSkin = new ComboBox<>(optionsSkin);
     private Label instructionLabel = new Label("Enter a Betting Amount: ");
+    private Label selectCarLabel = new Label("Select Car: ");
+    private Label selectMapLabel = new Label("Select Map: ");
+    private Label selectSkinLabel = new Label("Select Skin: ");
     private Label changingLabel = new Label("");
     private TextField textField = new TextField();
     private static Label timerLabel = new Label();
+    private static Label goldLabel = new Label();
     private DXHButton startButton = new DXHButton("Play");
     private DXHButton resetButton = new DXHButton("Reset");
 
@@ -76,17 +88,23 @@ public class GameViewManager {
 
     // Rest of Variables
     boolean racing = false;
-    Queue<String> finishedOrder = new LinkedList<String>();
-    double bet;
+    List<String> finishedOrder = new ArrayList<>();
+    int bet;
     String userChoice;
+    String mapChoice;
+
+    ImageView imageViewBackground = new ImageView();
 
     private Stage mainStage;
+    private User user;
 
     public GameViewManager() {
 
+        user = new User("abc", "123", new SimpleIntegerProperty(100));
         loadBackground(mainPane);
         initView();
         mainPane.getChildren().add(imgSelectLine);
+        mainPane.getChildren().add(goldLabel);
         showDialog();
         drawAllCar(false);
     }
@@ -112,6 +130,13 @@ public class GameViewManager {
         menuPanelBackground.setFitWidth(bounds.getWidth() / 2);
         menuPanelBackground.setFitHeight(2 * bounds.getHeight() / 3);
 
+        // Đếm thời gian bắt đầu
+        goldLabel.textProperty().bind(user.goldProperty().asString());
+        goldLabel.setTextFill(Color.GOLD);
+        goldLabel.setLayoutX((bounds.getMaxX() / 15));
+        goldLabel.setLayoutY((bounds.getMaxY() / 15));
+        goldLabel.setFont(Font.font("Impact", FontWeight.BOLD, 60));
+
         // Select line
         String pathSelectLine = ResourceFile.getInstance().getImagePath("select_line.png");
         Image imgLine = new Image(pathSelectLine, 1140, 88, false, true, false);
@@ -120,9 +145,24 @@ public class GameViewManager {
         imgSelectLine.setX(bounds.getMaxX() / 8);
         //imgSelectLine.setFitHeight(2 * bounds.getHeight() / 3);
 
+        // Title Text Field
+        selectCarLabel.setLayoutX((bounds.getMaxX() / 2) - 200);
+        selectCarLabel.setLayoutY((bounds.getMaxY() / 5) + 50);
+        selectCarLabel.setFont(Font.font("Impact", FontWeight.BOLD, 20));
+
+        // Title Text Field
+        selectMapLabel.setLayoutX((bounds.getMaxX() / 2) - 200);
+        selectMapLabel.setLayoutY((bounds.getMaxY() / 5) + 100);
+        selectMapLabel.setFont(Font.font("Impact", FontWeight.BOLD, 20));
+
+        // Title Text Field
+        selectSkinLabel.setLayoutX((bounds.getMaxX() / 2) - 200);
+        selectSkinLabel.setLayoutY((bounds.getMaxY() / 5) + 150);
+        selectSkinLabel.setFont(Font.font("Impact", FontWeight.BOLD, 20));
+
         // Combox chọn xe
         comboBox.setPromptText("Select Car");
-        comboBox.setLayoutX((bounds.getMaxX() / 2) - 50);
+        comboBox.setLayoutX((2 * bounds.getMaxX() / 4) + 100);
         comboBox.setLayoutY((bounds.getMaxY() / 5) + 50);
         comboBox.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             public ListCell<String> call(ListView<String> p) {
@@ -137,32 +177,92 @@ public class GameViewManager {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item);
-                            if (item.contains("RED"))
-                                setTextFill(Color.ORANGERED);
-                            else if (item.contains("PINK"))
-                                setTextFill(Color.DEEPPINK);
-                            else if (item.contains("GREEN"))
-                                setTextFill(Color.GREENYELLOW);
-                            else if (item.contains("PURPLE"))
-                                setTextFill(Color.PURPLE);
-                            else
-                                setTextFill(Color.DEEPSKYBLUE);
-                        } else
-                            setText(null);
+                            if (item.contains("1ST")) setTextFill(Color.ORANGERED);
+                            else if (item.contains("2ND")) setTextFill(Color.DEEPPINK);
+                            else if (item.contains("3RD")) setTextFill(Color.GREENYELLOW);
+                            else if (item.contains("4TH")) setTextFill(Color.PURPLE);
+                            else setTextFill(Color.DEEPSKYBLUE);
+                        } else setText(null);
                     }
                 };
                 return cell;
             }
         });
-        comboBox.getSelectionModel().selectedIndexProperty()
-                .addListener(new ChangeListener<Object>() {
-                    public void changed(
-                            @SuppressWarnings("rawtypes") ObservableValue observable,
-                            Object oldValue, Object newValue) {
-                        userChoice = newValue.toString();
-                        pickUpCarShowLine(userChoice);
+        comboBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
+            public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, Object oldValue, Object newValue) {
+                userChoice = newValue.toString();
+                pickUpCarShowLine(userChoice);
+            }
+        });
+
+        // Combox chọn map
+        comboBoxMap.setPromptText("Select Map");
+        comboBoxMap.setLayoutX((2 * bounds.getMaxX() / 4) + 100);
+        comboBoxMap.setLayoutY((bounds.getMaxY() / 5) + 100);
+        comboBoxMap.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            public ListCell<String> call(ListView<String> p) {
+                final ListCell<String> cell = new ListCell<String>() {
+                    {
+                        super.setPrefWidth(20);
+                        super.setFont(Font.font("Impact", FontWeight.BOLD, 14));
                     }
-                });
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item);
+                            if (item.contains("1ST")) setTextFill(Color.ORANGERED);
+                            else if (item.contains("2ND")) setTextFill(Color.DEEPPINK);
+                            else if (item.contains("3RD")) setTextFill(Color.GREENYELLOW);
+                            else if (item.contains("4TH")) setTextFill(Color.PURPLE);
+                            else setTextFill(Color.DEEPSKYBLUE);
+                        } else setText(null);
+                    }
+                };
+                return cell;
+            }
+        });
+        comboBoxMap.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
+            public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, Object oldValue, Object newValue) {
+                mapChoice = newValue.toString();
+                changeImageBackground(mapChoice);
+            }
+        });
+
+        comboBoxSkin.setPromptText("Select Skin");
+        comboBoxSkin.setLayoutX((2 * bounds.getMaxX() / 4) + 100);
+        comboBoxSkin.setLayoutY((bounds.getMaxY() / 5) + 150);
+        comboBoxSkin.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+            public ListCell<String> call(ListView<String> p) {
+                final ListCell<String> cell = new ListCell<String>() {
+                    {
+                        super.setPrefWidth(20);
+                        super.setFont(Font.font("Impact", FontWeight.BOLD, 14));
+                    }
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item);
+                            if (item.contains("1ST")) setTextFill(Color.ORANGERED);
+                            else if (item.contains("2ND")) setTextFill(Color.DEEPPINK);
+                            else if (item.contains("3RD")) setTextFill(Color.GREENYELLOW);
+                            else if (item.contains("4TH")) setTextFill(Color.PURPLE);
+                            else setTextFill(Color.DEEPSKYBLUE);
+                        } else setText(null);
+                    }
+                };
+                return cell;
+            }
+        });
+        comboBoxSkin.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
+            public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, Object oldValue, Object newValue) {
+                //mapChoice = newValue.toString();
+                //changeImageBackground(mapChoice);
+            }
+        });
 
         // Title Text Field
         instructionLabel.setLayoutX((bounds.getMaxX() / 2) - 100);
@@ -171,7 +271,7 @@ public class GameViewManager {
 
         // Text thông báo trạng thái cuộc đua
         changingLabel.setLayoutX((bounds.getMaxX() / 2) - 100);
-        changingLabel.setLayoutY((bounds.getMaxY() / 2) - 90);
+        changingLabel.setLayoutY((bounds.getMaxY() / 2) + 50);
         changingLabel.setFont(Font.font("Impact", FontWeight.BOLD, 18));
 
         // Nhập tiền cược
@@ -188,7 +288,7 @@ public class GameViewManager {
         timerLabel.setFont(Font.font("Impact", FontWeight.BOLD, 200));
 
         // StartButton Properties
-        startButton.setLayoutX((bounds.getMaxX() / 4) + 50);
+        startButton.setLayoutX((bounds.getMaxX() / 4) + 100);
         startButton.setLayoutY((4 * bounds.getMaxY() / 6) + 10);
 
         // ResetButton Properties
@@ -197,7 +297,7 @@ public class GameViewManager {
 
         // Exit button
         exitButton.setLayoutY(bounds.getMaxY() / 15);
-        exitButton.setLayoutX(11*bounds.getMaxX() / 12);
+        exitButton.setLayoutX(11 * bounds.getMaxX() / 12);
         //exitButton.setFitWidth(bounds.getWidth() / 2);
         //exitButton.setFitHeight(2 * bounds.getHeight() / 3);
 
@@ -210,138 +310,117 @@ public class GameViewManager {
             }
         });
 
-        startButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        String text = textField.getText(); // Get Text from
-                        // TextField
-                        try {
-                            // If reset button hasn't been pressed, you can't
-                            // start a new race
-                            // Try to convert String to Double
-                            bet = Double.parseDouble(text);
+        startButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String text = textField.getText(); // Get Text from
+                // TextField
+                try {
+                    // If reset button hasn't been pressed, you can't
+                    // start a new race
+                    // Try to convert String to Double
+                    bet = Integer.parseInt(text);
 
-                            if (bet > 1000) // If value is not valid,
-                                // changingLabel prints...
-                                changingLabel
-                                        .setText("C'mon! You don't have that much \nmoney. Try again!!");
-                            else if (bet < 1)
-                                changingLabel
-                                        .setText("Wrong!! Try we positive values!!");
-                            else if (userChoice == null) // If not userChoice,
-                                // changingLabel
-                                // prints...
-                                changingLabel
-                                        .setText("Choose one Car First!!");
-                            else {
-                                // Ok, race is good to go
-                                // Can't press buttons until race is over
-                                startButton.setDisable(true);
-                                resetButton.setDisable(true);
+                    if (bet > 1000) // If value is not valid,
+                        // changingLabel prints...
+                        changingLabel.setText("C'mon! You don't have that much \nmoney. Try again!!");
+                    else if (bet < 1) changingLabel.setText("Wrong!! Try we positive values!!");
+                    else if (userChoice == null) // If not userChoice,
+                        // changingLabel
+                        // prints...
+                        changingLabel.setText("Choose one Car First!!");
+                    else {
+                        // Ok, race is good to go
+                        // Can't press buttons until race is over
+                        startButton.setDisable(true);
+                        resetButton.setDisable(true);
 
-                                racing = true;
+                        racing = true;
 
-                                timeSeconds.set(STARTTIME); // Countdown start
-                                timeline = new Timeline();
-                                timeline.getKeyFrames().add(
-                                        new KeyFrame(Duration
-                                                .millis(STARTTIME + 4000), // Timer Duration
-                                                new KeyValue(timeSeconds, 0))); // Countdown
-                                // finish at 0
-                                timeline.playFromStart(); // Play from beginning
-
-                                // Check userChoice and print his/her option.
-                                switch (userChoice) {
-                                    case "0":
-                                        changingLabel
-                                                .setText("Thanks for Betting!! \n You bet $"
-                                                        + bet + " on the RED Car.");
-                                        break;
-                                    case "1":
-                                        changingLabel
-                                                .setText("Thanks for Betting!! \n You bet $"
-                                                        + bet + " on the PINK Car.");
-                                        break;
-                                    case "2":
-                                        changingLabel
-                                                .setText("Thanks for Betting!! \n You bet $"
-                                                        + bet + " on the GREEN Car.");
-                                        break;
-                                    case "3":
-                                        changingLabel
-                                                .setText("Thanks for Betting!! \n You bet $"
-                                                        + bet + " on the PURPLE Car.");
-                                        break;
-                                    case "4":
-                                        changingLabel
-                                                .setText("Thanks for Betting!! \n You bet $"
-                                                        + bet + " on the BLUE Car.");
-                                        break;
-                                }
-                                // Remove old pane
-                                //paneRacing.getChildren().remove(paneRace);
-
-                                // Create a task to run the Thread that make
-                                Runnable race = new MakeRockets(finishedOrder);
-                                threadRace = new Thread(race);
-                                threadRace.start(); // Start Thread
-
-                                // Add a new pane
-                                //paneRacing.getChildren().add(paneRace);
-
-                                // Create a task to run the Thread that post
-                                // the results of the race
-                                Runnable results = new PostResults(paneDialog, finishedOrder,
-                                        changingLabel, userChoice, bet, resetButton);
-                                threadResult = new Thread(results);
-                                threadResult.start(); // Start Thread
-                            }
-                        } catch (NumberFormatException e) {
-                            // If there is no bet, changingLabel prints...
-                            changingLabel
-                                    .setText("C'mon! You need to bet something");
-                        }
-                    }
-                });
-
-        resetButton.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (!racing) // If not racing, do nothing
-                            return;
-
-                        // Turn off reset until next race starts
-                        racing = false;
-
-                        // Reset TextField
-                        textField.setText(null);
-
-                        // If user hasn't click Reset race doesn't start
-                        startButton.setDisable(false);// allow new race to start
-
-                        // Reset Timer when Click reset
-                        if (timeline != null)
-                            timeline.stop();
-                        timeSeconds.set(STARTTIME);
+                        timeSeconds.set(STARTTIME); // Countdown start
                         timeline = new Timeline();
-                        timeline.getKeyFrames().add(
-                                new KeyFrame(Duration.millis(STARTTIME + 4000),
-                                        new KeyValue(timeSeconds, 0)));
+                        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(STARTTIME + 4000), // Timer Duration
+                                new KeyValue(timeSeconds, 0))); // Countdown
+                        // finish at 0
+                        timeline.playFromStart(); // Play from beginning
 
-                        // Reset Label and queue
-                        changingLabel.setText("Ok...Make new bet");
-                        finishedOrder = new LinkedList<String>();
+                        // Check userChoice and print his/her option.
+                        switch (userChoice) {
+                            case "0":
+                                changingLabel.setText("Thanks for Betting!! \n You bet $" + bet + " on the RED Car.");
+                                break;
+                            case "1":
+                                changingLabel.setText("Thanks for Betting!! \n You bet $" + bet + " on the PINK Car.");
+                                break;
+                            case "2":
+                                changingLabel.setText("Thanks for Betting!! \n You bet $" + bet + " on the GREEN Car.");
+                                break;
+                            case "3":
+                                changingLabel.setText("Thanks for Betting!! \n You bet $" + bet + " on the PURPLE Car.");
+                                break;
+                            case "4":
+                                changingLabel.setText("Thanks for Betting!! \n You bet $" + bet + " on the BLUE Car.");
+                                break;
+                        }
 
-                        // Stop the threads from finishing, in case you
-                        // interrupted a race
-                        threadRace.interrupt();
-                        threadResult.interrupt();
+                        user.setGold(user.getGold() - bet);
+                        // Remove old pane
+                        //paneRacing.getChildren().remove(paneRace);
 
-                        drawAllCar(false);
+                        // Create a task to run the Thread that make
+                        Runnable race = new MakeRockets(finishedOrder);
+                        threadRace = new Thread(race);
+                        threadRace.start(); // Start Thread
+
+                        // Add a new pane
+                        //paneRacing.getChildren().add(paneRace);
+
+                        // Create a task to run the Thread that post
+                        // the results of the race
+                        Runnable results = new PostResults(paneDialog, finishedOrder, changingLabel, userChoice, bet, resetButton);
+                        threadResult = new Thread(results);
+                        threadResult.start(); // Start Thread
                     }
-                });
+                } catch (NumberFormatException e) {
+                    // If there is no bet, changingLabel prints...
+                    changingLabel.setText("C'mon! You need to bet something");
+                }
+            }
+        });
+
+        resetButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (!racing) // If not racing, do nothing
+                    return;
+
+                // Turn off reset until next race starts
+                racing = false;
+
+                // Reset TextField
+                textField.setText(null);
+
+                // If user hasn't click Reset race doesn't start
+                startButton.setDisable(false);// allow new race to start
+
+                // Reset Timer when Click reset
+                if (timeline != null) timeline.stop();
+                timeSeconds.set(STARTTIME);
+                timeline = new Timeline();
+                timeline.getKeyFrames().add(new KeyFrame(Duration.millis(STARTTIME + 4000), new KeyValue(timeSeconds, 0)));
+
+                // Reset Label and queue
+                changingLabel.setText("Ok...Make new bet");
+                finishedOrder = new ArrayList<>();
+
+                // Stop the threads from finishing, in case you
+                // interrupted a race
+                threadRace.interrupt();
+                threadResult.interrupt();
+
+                drawAllCar(false);
+            }
+        });
         // Add everything to the pane
     }
 
@@ -368,8 +447,10 @@ public class GameViewManager {
 
     private void showDialog() {
         if (paneDialog.getChildren().isEmpty()) {
-            paneDialog.getChildren().addAll(menuPanelBackground, comboBox, startButton, resetButton,
-                    textField, instructionLabel, changingLabel, exitButton);
+            paneDialog.getChildren().addAll(menuPanelBackground, selectCarLabel,
+                    comboBoxSkin, selectSkinLabel, comboBox, selectMapLabel,
+                    comboBoxMap, startButton, resetButton, textField,
+                    instructionLabel, changingLabel, exitButton);
             mainPane.getChildren().add(paneDialog);
         }
     }
@@ -381,41 +462,56 @@ public class GameViewManager {
         }
     }
 
-    public static void loadBackground(Pane pane) {
-        // Load the image from a specific file
-        String imgBackground = ResourceFile.getInstance().getImagePath("Map1.png");
-        Image galaxy = new Image(imgBackground, 800.0, 800.0, false, true, false);
-
+    public void loadBackground(Pane pane) {
         // Painting the image
-        ImageView imageView = new ImageView();
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
-        imageView.setImage(galaxy);
-        imageView.setX(bounds.getMinX());
-        imageView.setY(bounds.getMinY());
-        imageView.setFitWidth(bounds.getWidth());
-        imageView.setFitHeight(bounds.getHeight());
+        String imgBackground = ResourceFile.getInstance().getImagePath("Map1.png");
+        Image galaxy = new Image(imgBackground, 800.0, 800.0, false, true, false);
+        imageViewBackground.setImage(galaxy);
+        imageViewBackground.setX(bounds.getMinX());
+        imageViewBackground.setY(bounds.getMinY());
+        imageViewBackground.setFitWidth(bounds.getWidth());
+        imageViewBackground.setFitHeight(bounds.getHeight());
 
         // Sets up picture background
-        pane.getChildren().add(imageView);
+        pane.getChildren().add(imageViewBackground);
+    }
+
+    private void changeImageBackground(String map) {
+        System.out.println("#changeImageBackground IN: " + map);
+        String imgBackground;
+        if (map.equals("1")) {
+            imgBackground = ResourceFile.getInstance().getImagePath("background.png");
+        } else if (map.equals("2")) {
+            imgBackground = ResourceFile.getInstance().getImagePath("background.png");
+        } else {
+            imgBackground = ResourceFile.getInstance().getImagePath("Map1.png");
+        }
+        // Load the image from a specific file
+        Image galaxy = new Image(imgBackground, 800.0, 800.0, false, true, false);
+        imageViewBackground.setImage(galaxy);
+        imageViewBackground.setX(bounds.getMinX());
+        imageViewBackground.setY(bounds.getMinY());
+        imageViewBackground.setFitWidth(bounds.getWidth());
+        imageViewBackground.setFitHeight(bounds.getHeight());
+        System.out.println("#changeImageBackground OUT: " + imgBackground);
     }
 
     // Draw a car method
-    public static void drawCar(Group pane, double centerX, double centerY,
-                               double scale, double angle, Color stripesColor,
-                               Queue<String> finishOrder, String rocketNum, boolean runing) {
-        String imgBackground = ResourceFile.getInstance().getImagePath("carBlack.png");
+    public static void drawCar(Group pane, double centerX, double centerY, double scale, double angle, Color stripesColor, List<String> finishOrder, String rocketNum, boolean runing) {
+        String imgBackground = ResourceFile.getInstance().getImagePath("ford_black.png");
         if (stripesColor.equals(Color.ORANGERED)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("carRed.png");
+            imgBackground = ResourceFile.getInstance().getImagePath("ford_orange.png");
         } else if (stripesColor.equals(Color.DEEPPINK)) {
             imgBackground = ResourceFile.getInstance().getImagePath("carPink.png");
         } else if (stripesColor.equals(Color.GREENYELLOW)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("carGreen.png");
+            imgBackground = ResourceFile.getInstance().getImagePath("porsche_green.png");
         } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
             imgBackground = ResourceFile.getInstance().getImagePath("carViolet.png");
         } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("carBlue.png");
+            imgBackground = ResourceFile.getInstance().getImagePath("porsche_blue.png");
         }
 
         Image galaxy = new Image(imgBackground, 175 * scale, 93 * scale, false, true, false);
@@ -449,8 +545,7 @@ public class GameViewManager {
             pathTransition.setDuration(Duration.millis(Math.random() * 5000 + 2000));
             pathTransition.setPath(path); // Set path to follow
             pathTransition.setNode(aux);
-            pathTransition
-                    .setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+            pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
             pathTransition.play(); // Start Animation
 
             pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
@@ -466,8 +561,7 @@ public class GameViewManager {
                     pathTransition2.setDuration(Duration.millis(Math.random() * 5000 + 500));
                     pathTransition2.setPath(path2); // Set path to follow
                     pathTransition2.setNode(aux);
-                    pathTransition2
-                            .setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+                    pathTransition2.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
                     pathTransition2.play();
                     // Create a EventHandler to know who finished the race and in what position.
                     pathTransition2.setOnFinished(new EventHandler<ActionEvent>() {
@@ -490,16 +584,11 @@ public class GameViewManager {
             paneRacing.getChildren().clear();
             mainPane.getChildren().remove(paneRacing);
         }
-        drawCar(paneRace, -5, 170, 0.6, 360,
-                Color.ORANGERED, finishedOrder, "1", isRun);
-        drawCar(paneRace, -5, 295, 0.6, 360,
-                Color.DEEPPINK, finishedOrder, "2", isRun);
-        drawCar(paneRace, -5, 410, 0.6, 360,
-                Color.GREENYELLOW, finishedOrder, "3", isRun);
-        drawCar(paneRace, -5, 535, 0.6, 360,
-                Color.MEDIUMPURPLE, finishedOrder, "4", isRun);
-        drawCar(paneRace, -5, 650, 0.6, 360,
-                Color.DEEPSKYBLUE, finishedOrder, "5", isRun);
+        drawCar(paneRace, -5, 170, 0.6, 360, Color.ORANGERED, finishedOrder, "0", isRun);
+        drawCar(paneRace, -5, 295, 0.6, 360, Color.DEEPPINK, finishedOrder, "1", isRun);
+        drawCar(paneRace, -5, 410, 0.6, 360, Color.GREENYELLOW, finishedOrder, "2", isRun);
+        drawCar(paneRace, -5, 535, 0.6, 360, Color.MEDIUMPURPLE, finishedOrder, "3", isRun);
+        drawCar(paneRace, -5, 650, 0.6, 360, Color.DEEPSKYBLUE, finishedOrder, "4", isRun);
         paneRacing.getChildren().add(paneRace);
         mainPane.getChildren().add(paneRacing);
     }
@@ -507,11 +596,11 @@ public class GameViewManager {
 
     // The task that prints the results of the race
     class PostResults implements Runnable {
-        Queue<String> finishedOrder; // Race Positions
+        List<String> finishedOrder; // Race Positions
         Label changingLabel; // ChangingLabel
         Pane pane; // Our pane
         String userChoice; // User ComboBox selection
-        double bet; // User Bet amount
+        int bet; // User Bet amount
         Button resetButton; // Reset Button
 
         interface CompleteCallBack {
@@ -523,8 +612,7 @@ public class GameViewManager {
         CompleteCallBack callBack;
 
         // Construct a task with specific values
-        public PostResults(Pane pane, Queue<String> finishedOrder,
-                           Label changingLabel, String userChoice, double bet, Button resetButton) {
+        public PostResults(Pane pane, List<String> finishedOrder, Label changingLabel, String userChoice, int bet, Button resetButton) {
             this.finishedOrder = finishedOrder;
             this.pane = pane;
             this.changingLabel = changingLabel;
@@ -536,31 +624,39 @@ public class GameViewManager {
         // Tell Thread how to run
         public void run() {
             try {
-                while (finishedOrder.size() < 5)
-                    Thread.sleep(500);
+                while (finishedOrder.size() < 5) Thread.sleep(500);
             } catch (InterruptedException e) {
                 return; // If sleep is interrupted it was due to reset,
             }
 
             String temp = ""; // Text to Display
-
-            if (finishedOrder.poll().equals(userChoice)) // If userChoice finished 1rst...
-                temp = ("Wow, You Just Won First!! You Earned $" + bet * 1000 + "!!!");
-            else if (finishedOrder.poll().equals(userChoice)) // If userChoice finished 2nd...
-                temp = ("Nice, You Got Second. You Earned $" + bet * 500 + "!!");
-            else if (finishedOrder.poll().equals(userChoice)) // If userChoice finished 3rd...
-                temp = ("Well, 3rd is better than none. You Earned $" + bet
-                        * 250 + "!");
-            else // If userChoice finished 4th or last...
+            int tempBet = 0; // Text to Display
+            System.out.println("Select is: " + userChoice);
+            for (String rank : finishedOrder) {
+                System.out.println(rank);
+            }
+            if (finishedOrder.get(0).equals(userChoice)) { // If userChoice finished 1rst...
+                temp = ("Wow, You Just Won First!! You Earned $" + bet * 3 + "!!!");
+                tempBet = bet * 3;
+            } else if (finishedOrder.get(1).equals(userChoice)) { // If userChoice finished 2nd...
+                temp = ("Nice, You Got Second. You Earned $" + bet * 2 + "!!");
+                tempBet = bet * 2;
+            } else if (finishedOrder.get(2).equals(userChoice)) { // If userChoice finished 3rd...
+                temp = ("Well, 3rd is better than none. You Earned $" + bet + "!");
+                tempBet = bet;
+            } else { // If userChoice finished 4th or last...
                 temp = ("Nope, Better Luck Next Time!!");
+            }
 
             final String result = temp;
+            final int resultBet = tempBet;
 
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
                     // Set text giving results
                     changingLabel.setText(result);
+                    user.setGold(user.getGold() + resultBet);
                     // Can't Click reset until race is finish
                     resetButton.setDisable(false);
                     //callBack.runSuccess();
@@ -571,10 +667,10 @@ public class GameViewManager {
     }
 
     class MakeRockets implements Runnable {
-        Queue<String> finishedOrder; // Race Positions
+        List<String> finishedOrder; // Race Positions
 
         // Construct a task with specific values
-        public MakeRockets(Queue<String> finishedOrder) {
+        public MakeRockets(List<String> finishedOrder) {
             this.finishedOrder = finishedOrder;
             hideDialog();
             mainPane.getChildren().addAll(timerLabel);
