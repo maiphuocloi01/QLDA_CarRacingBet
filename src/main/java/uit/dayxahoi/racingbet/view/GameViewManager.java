@@ -322,9 +322,9 @@ public class GameViewManager {
                     // Try to convert String to Double
                     bet = Integer.parseInt(text);
 
-                    if (bet > 1000) // If value is not valid,
+                    if (bet > user.getGold()) // If value is not valid,
                         // changingLabel prints...
-                        changingLabel.setText("C'mon! You don't have that much \nmoney. Try again!!");
+                        changingLabel.setText("You don't have enough money. Try again!!");
                     else if (bet < 1) changingLabel.setText("Wrong!! Try we positive values!!");
                     else if (userChoice == null) // If not userChoice,
                         // changingLabel
@@ -484,9 +484,9 @@ public class GameViewManager {
         System.out.println("#changeImageBackground IN: " + map);
         String imgBackground;
         if (map.equals("1")) {
-            imgBackground = ResourceFile.getInstance().getImagePath("background.png");
+            imgBackground = ResourceFile.getInstance().getImagePath("Map2.png");
         } else if (map.equals("2")) {
-            imgBackground = ResourceFile.getInstance().getImagePath("background.png");
+            imgBackground = ResourceFile.getInstance().getImagePath("Map3.png");
         } else {
             imgBackground = ResourceFile.getInstance().getImagePath("Map1.png");
         }
@@ -502,42 +502,42 @@ public class GameViewManager {
 
     private static String changeSkinCar(Color stripesColor, String skin) {
         System.out.println("#changeSkinCar IN: " + skin);
-        String imgBackground = ResourceFile.getInstance().getImagePath("chervolet_black.png");
-        if (skin.equals("1")) {
+        String imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin01.png");
+        if (skin.equals("0")) {
             if (stripesColor.equals(Color.ORANGERED)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("porsche_white.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin01.png");
             } else if (stripesColor.equals(Color.DEEPPINK)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("chervolet_white.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin02.png");
             } else if (stripesColor.equals(Color.GREENYELLOW)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("porsche_green.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin03.png");
             } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("chervolet_black.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin04.png");
             } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("porsche_blue.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin05.png");
             }
-        } else if (skin.equals("2")) {
+        } else if (skin.equals("1")) {
             if (stripesColor.equals(Color.ORANGERED)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("ford_orange.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon01.png");
             } else if (stripesColor.equals(Color.DEEPPINK)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("ferari_white.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon02.png");
             } else if (stripesColor.equals(Color.GREENYELLOW)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("ferari_green.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon03.png");
             } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("ferari_yellow.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon04.png");
             } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("ford_black.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon05.png");
             }
         } else {
             if (stripesColor.equals(Color.ORANGERED)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("chervolet_yellow.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set3_man01.png");
             } else if (stripesColor.equals(Color.DEEPPINK)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("lamboghini_black.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set3_man02.png");
             } else if (stripesColor.equals(Color.GREENYELLOW)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("lamboghini_green.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set3_man03.png");
             } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("lamboghini_yellow.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set3_man04.png");
             } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("ford_white.png");
+                imgBackground = ResourceFile.getInstance().getImagePath("set3_man05.png");
             }
         }
         return imgBackground;
@@ -547,14 +547,14 @@ public class GameViewManager {
     public static void drawCar(Group pane, double centerX, double centerY, double scale, double angle, Color stripesColor, List<String> finishOrder, String rocketNum, boolean runing, String skinCar) {
         String imgBackground = changeSkinCar(stripesColor, skinCar);
 
-        Image galaxy = new Image(imgBackground, 175 * scale, 93 * scale, false, true, false);
+        Image galaxy = new Image(imgBackground, 215 * scale, 183 * scale, false, true, false);
 
         // Painting the image
         ImageView imageView = new ImageView();
 
         imageView.setImage(galaxy);
         imageView.setX(centerX);
-        imageView.setY(centerY);
+        imageView.setY(centerY-55);
 
         Pane aux = new Pane();
 
@@ -617,11 +617,11 @@ public class GameViewManager {
             paneRacing.getChildren().clear();
             mainPane.getChildren().remove(paneRacing);
         }
-        drawCar(paneRace, -5, 170, 0.6, 360, Color.ORANGERED, finishedOrder, "0", isRun, skinChoice);
-        drawCar(paneRace, -5, 295, 0.6, 360, Color.DEEPPINK, finishedOrder, "1", isRun, skinChoice);
-        drawCar(paneRace, -5, 410, 0.6, 360, Color.GREENYELLOW, finishedOrder, "2", isRun, skinChoice);
-        drawCar(paneRace, -5, 535, 0.6, 360, Color.MEDIUMPURPLE, finishedOrder, "3", isRun, skinChoice);
-        drawCar(paneRace, -5, 650, 0.6, 360, Color.DEEPSKYBLUE, finishedOrder, "4", isRun, skinChoice);
+        drawCar(paneRace, -5, 180, 0.6, 360, Color.ORANGERED, finishedOrder, "0", isRun, skinChoice);
+        drawCar(paneRace, -5, 305, 0.6, 360, Color.DEEPPINK, finishedOrder, "1", isRun, skinChoice);
+        drawCar(paneRace, -5, 420, 0.6, 360, Color.GREENYELLOW, finishedOrder, "2", isRun, skinChoice);
+        drawCar(paneRace, -5, 545, 0.6, 360, Color.MEDIUMPURPLE, finishedOrder, "3", isRun, skinChoice);
+        drawCar(paneRace, -5, 660, 0.6, 360, Color.DEEPSKYBLUE, finishedOrder, "4", isRun, skinChoice);
         paneRacing.getChildren().add(paneRace);
         mainPane.getChildren().add(paneRacing);
     }
