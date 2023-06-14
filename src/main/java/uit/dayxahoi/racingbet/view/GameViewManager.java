@@ -92,6 +92,7 @@ public class GameViewManager {
     int bet;
     String userChoice;
     String mapChoice;
+    String skinChoice = "0";
 
     ImageView imageViewBackground = new ImageView();
 
@@ -106,7 +107,7 @@ public class GameViewManager {
         mainPane.getChildren().add(imgSelectLine);
         mainPane.getChildren().add(goldLabel);
         showDialog();
-        drawAllCar(false);
+        drawAllCar(false, "0");
     }
 
     public void startGame(Stage gameStage) {
@@ -259,8 +260,8 @@ public class GameViewManager {
         });
         comboBoxSkin.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
             public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, Object oldValue, Object newValue) {
-                //mapChoice = newValue.toString();
-                //changeImageBackground(mapChoice);
+                skinChoice = newValue.toString();
+                drawAllCar(false, skinChoice);
             }
         });
 
@@ -418,7 +419,7 @@ public class GameViewManager {
                 threadRace.interrupt();
                 threadResult.interrupt();
 
-                drawAllCar(false);
+                drawAllCar(false, skinChoice);
             }
         });
         // Add everything to the pane
@@ -499,20 +500,52 @@ public class GameViewManager {
         System.out.println("#changeImageBackground OUT: " + imgBackground);
     }
 
-    // Draw a car method
-    public static void drawCar(Group pane, double centerX, double centerY, double scale, double angle, Color stripesColor, List<String> finishOrder, String rocketNum, boolean runing) {
-        String imgBackground = ResourceFile.getInstance().getImagePath("ford_black.png");
-        if (stripesColor.equals(Color.ORANGERED)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("ford_orange.png");
-        } else if (stripesColor.equals(Color.DEEPPINK)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("carPink.png");
-        } else if (stripesColor.equals(Color.GREENYELLOW)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("porsche_green.png");
-        } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("carViolet.png");
-        } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
-            imgBackground = ResourceFile.getInstance().getImagePath("porsche_blue.png");
+    private static String changeSkinCar(Color stripesColor, String skin) {
+        System.out.println("#changeSkinCar IN: " + skin);
+        String imgBackground = ResourceFile.getInstance().getImagePath("chervolet_black.png");
+        if (skin.equals("1")) {
+            if (stripesColor.equals(Color.ORANGERED)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("porsche_white.png");
+            } else if (stripesColor.equals(Color.DEEPPINK)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("chervolet_white.png");
+            } else if (stripesColor.equals(Color.GREENYELLOW)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("porsche_green.png");
+            } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("chervolet_black.png");
+            } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("porsche_blue.png");
+            }
+        } else if (skin.equals("2")) {
+            if (stripesColor.equals(Color.ORANGERED)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("ford_orange.png");
+            } else if (stripesColor.equals(Color.DEEPPINK)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("ferari_white.png");
+            } else if (stripesColor.equals(Color.GREENYELLOW)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("ferari_green.png");
+            } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("ferari_yellow.png");
+            } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("ford_black.png");
+            }
+        } else {
+            if (stripesColor.equals(Color.ORANGERED)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("chervolet_yellow.png");
+            } else if (stripesColor.equals(Color.DEEPPINK)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("lamboghini_black.png");
+            } else if (stripesColor.equals(Color.GREENYELLOW)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("lamboghini_green.png");
+            } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("lamboghini_yellow.png");
+            } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("ford_white.png");
+            }
         }
+        return imgBackground;
+    }
+
+    // Draw a car method
+    public static void drawCar(Group pane, double centerX, double centerY, double scale, double angle, Color stripesColor, List<String> finishOrder, String rocketNum, boolean runing, String skinCar) {
+        String imgBackground = changeSkinCar(stripesColor, skinCar);
 
         Image galaxy = new Image(imgBackground, 175 * scale, 93 * scale, false, true, false);
 
@@ -577,18 +610,18 @@ public class GameViewManager {
         pane.getChildren().add(aux);
     }
 
-    public void drawAllCar(boolean isRun) {
+    public void drawAllCar(boolean isRun, String skinChoice) {
         if (!paneRace.getChildren().isEmpty()) {
             System.out.println("reset button");
             paneRace.getChildren().clear();
             paneRacing.getChildren().clear();
             mainPane.getChildren().remove(paneRacing);
         }
-        drawCar(paneRace, -5, 170, 0.6, 360, Color.ORANGERED, finishedOrder, "0", isRun);
-        drawCar(paneRace, -5, 295, 0.6, 360, Color.DEEPPINK, finishedOrder, "1", isRun);
-        drawCar(paneRace, -5, 410, 0.6, 360, Color.GREENYELLOW, finishedOrder, "2", isRun);
-        drawCar(paneRace, -5, 535, 0.6, 360, Color.MEDIUMPURPLE, finishedOrder, "3", isRun);
-        drawCar(paneRace, -5, 650, 0.6, 360, Color.DEEPSKYBLUE, finishedOrder, "4", isRun);
+        drawCar(paneRace, -5, 170, 0.6, 360, Color.ORANGERED, finishedOrder, "0", isRun, skinChoice);
+        drawCar(paneRace, -5, 295, 0.6, 360, Color.DEEPPINK, finishedOrder, "1", isRun, skinChoice);
+        drawCar(paneRace, -5, 410, 0.6, 360, Color.GREENYELLOW, finishedOrder, "2", isRun, skinChoice);
+        drawCar(paneRace, -5, 535, 0.6, 360, Color.MEDIUMPURPLE, finishedOrder, "3", isRun, skinChoice);
+        drawCar(paneRace, -5, 650, 0.6, 360, Color.DEEPSKYBLUE, finishedOrder, "4", isRun, skinChoice);
         paneRacing.getChildren().add(paneRace);
         mainPane.getChildren().add(paneRacing);
     }
@@ -688,18 +721,8 @@ public class GameViewManager {
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    drawAllCar(true);
+                    drawAllCar(true, skinChoice);
                     mainPane.getChildren().remove(timerLabel);
-                    /*drawCar(pane, -5, 150, 0.6, 360, Color.ORANGERED,
-                            finishedOrder, "0", true);
-                    drawCar(pane, -5, 255, 0.6, 360, Color.DEEPPINK,
-                            finishedOrder, "1", true);
-                    drawCar(pane, -5, 360, 0.6, 360, Color.GREENYELLOW,
-                            finishedOrder, "2", true);
-                    drawCar(pane, -5, 465, 0.6, 360, Color.MEDIUMPURPLE,
-                            finishedOrder, "3", true);
-                    drawCar(pane, -5, 575, 0.6, 360, Color.DEEPSKYBLUE,
-                            finishedOrder, "4", true);*/
                 }
             });
         }
