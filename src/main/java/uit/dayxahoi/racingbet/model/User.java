@@ -7,9 +7,9 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String username;
     private String password;
-    private IntegerProperty gold;
+    private int gold;
 
-    public User(String username, String password, IntegerProperty gold) {
+    public User(String username, String password, int gold) {
         this.username = username;
         this.password = password;
         this.gold = gold;
@@ -32,14 +32,10 @@ public class User implements Serializable {
     }
 
     public int getGold() {
-        return gold.get();
-    }
-
-    public IntegerProperty goldProperty() {
         return gold;
     }
 
     public void setGold(int gold) {
-        this.gold.set(gold);
+        this.gold = gold;
     }
 }

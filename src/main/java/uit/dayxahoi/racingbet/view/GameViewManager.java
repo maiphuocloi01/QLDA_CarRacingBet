@@ -27,6 +27,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.model.DXHButton;
 import uit.dayxahoi.racingbet.model.User;
 import uit.dayxahoi.racingbet.util.ResourceFile;
@@ -97,11 +98,14 @@ public class GameViewManager {
     ImageView imageViewBackground = new ImageView();
 
     private Stage mainStage;
-    private User user;
+    private final User user;
+
+    private IntegerProperty goldObs = new SimpleIntegerProperty();
 
     public GameViewManager() {
 
-        user = new User("abc", "123", new SimpleIntegerProperty(100));
+        user = (User) CommonController.getInstance().readObjectFromFile();
+        goldObs.setValue(user.getGold());
         loadBackground(mainPane);
         initView();
         mainPane.getChildren().add(imgSelectLine);
@@ -132,7 +136,7 @@ public class GameViewManager {
         menuPanelBackground.setFitHeight(2 * bounds.getHeight() / 3);
 
         // Đếm thời gian bắt đầu
-        goldLabel.textProperty().bind(user.goldProperty().asString());
+        goldLabel.textProperty().bind(goldObs.asString());
         goldLabel.setTextFill(Color.GOLD);
         goldLabel.setLayoutX((bounds.getMaxX() / 15));
         goldLabel.setLayoutY((bounds.getMaxY() / 15));
@@ -365,6 +369,8 @@ public class GameViewManager {
                         }
 
                         user.setGold(user.getGold() - bet);
+                        goldObs.setValue(user.getGold());
+                        CommonController.getInstance().writeObjectToFile(user);
                         // Remove old pane
                         //paneRacing.getChildren().remove(paneRace);
 
@@ -690,6 +696,8 @@ public class GameViewManager {
                     // Set text giving results
                     changingLabel.setText(result);
                     user.setGold(user.getGold() + resultBet);
+                    goldObs.setValue(user.getGold());
+                    CommonController.getInstance().writeObjectToFile(user);
                     // Can't Click reset until race is finish
                     resetButton.setDisable(false);
                     //callBack.runSuccess();

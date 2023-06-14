@@ -1,5 +1,6 @@
 package uit.dayxahoi.racingbet.view;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
@@ -9,7 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.model.DXHButton;
+import uit.dayxahoi.racingbet.model.User;
 import uit.dayxahoi.racingbet.util.ResourceFile;
 
 import java.util.ArrayList;
@@ -38,10 +41,21 @@ public class MenuViewManager {
 
     List<DXHButton> menuButtons;
 
+    User user;
+
     //List<ShipPicker> shipsList;
     //private SHIP choosenShip;
 
     public MenuViewManager() {
+
+        if (CommonController.getInstance().isExistData()) {
+            user = (User) CommonController.getInstance().readObjectFromFile();
+        } else {
+            user = new User("abc", "abc", 100);
+            CommonController.getInstance().writeObjectToFile(user);
+        }
+
+
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
