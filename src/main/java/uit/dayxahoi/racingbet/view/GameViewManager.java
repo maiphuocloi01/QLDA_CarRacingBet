@@ -322,9 +322,9 @@ public class GameViewManager {
                     // Try to convert String to Double
                     bet = Integer.parseInt(text);
 
-                    if (bet > 1000) // If value is not valid,
+                    if (bet > user.getGold()) // If value is not valid,
                         // changingLabel prints...
-                        changingLabel.setText("C'mon! You don't have that much \nmoney. Try again!!");
+                        changingLabel.setText("You don't have enough money. Try again!!");
                     else if (bet < 1) changingLabel.setText("Wrong!! Try we positive values!!");
                     else if (userChoice == null) // If not userChoice,
                         // changingLabel
