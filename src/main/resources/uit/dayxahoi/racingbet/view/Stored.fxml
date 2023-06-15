@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="498.0" prefWidth="663.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/background.png');;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uit.dayxahoi.racingbet.controller.StoredController">
+<AnchorPane prefHeight="498.0" prefWidth="663.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/background.png');;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uit.dayxahoi.racingbet.controller.StoredController">
    <children>
       <Label layoutX="278.0" layoutY="22.0" prefHeight="36.0" prefWidth="137.0" text="CỬA HÀNG" textFill="#8f8b5f">
          <font>
@@ -65,17 +65,17 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Button fx:id="MuaMapNongBongButton" layoutX="365.0" layoutY="39.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaMapNongBongButton" layoutX="365.0" layoutY="39.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaMapGayLuButton" layoutX="365.0" layoutY="124.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaMapGayLuButton" layoutX="365.0" layoutY="124.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaMapCoDienButton" layoutX="365.0" layoutY="209.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaMapCoDienButton" layoutX="365.0" layoutY="209.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -130,17 +130,17 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Button fx:id="MuaSkinWibuButton" layoutX="367.0" layoutY="51.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaSkinWibuButton" layoutX="367.0" layoutY="51.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaSkinDXHButton" layoutX="367.0" layoutY="227.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaSkinDXHButton" layoutX="367.0" layoutY="227.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaSkinLichLamButton" layoutX="367.0" layoutY="131.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaSkinLichLamButton" layoutX="367.0" layoutY="131.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -152,7 +152,7 @@
         </tabs>
       </TabPane>
       <Label fx:id="HienThiTienLabel" alignment="CENTER_RIGHT" layoutX="224.0" layoutY="429.0" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: rgba(150, 111, 51, 5);" text="20000VND" />
-      <Button fx:id="QuayLaiButton" layoutX="521.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#quayLai" prefHeight="36.0" prefWidth="96.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');;" text="QUAY LẠI" />
+      <Button fx:id="QuayLaiButton" layoutX="521.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#quayLai" prefHeight="36.0" prefWidth="96.0" style="-fx-background-image: url('/uit/dayxahoi/racingbet/drawable/red_button.png');;" text="QUAY LẠI" />
       <ImageView fitHeight="314.0" fitWidth="160.0" layoutX="20.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../drawable/player.png" />
