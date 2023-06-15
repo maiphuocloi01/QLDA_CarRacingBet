@@ -13,6 +13,6 @@ module uit.dayxahoi.racingbet {
     opens uit.dayxahoi.racingbet.view to javafx.fxml;
     exports uit.dayxahoi.racingbet.controller;
     opens uit.dayxahoi.racingbet.controller to javafx.fxml;
-    exports uit.dayxahoi.racingbet.minigame;
-    opens uit.dayxahoi.racingbet.minigame to javafx.fxml;
+    exports uit.dayxahoi.racingbet.mini;
+    opens uit.dayxahoi.racingbet.mini to javafx.fxml;
 }

@@ -167,7 +167,7 @@ public class MenuViewManager {
 
             @Override
             public void handle(ActionEvent event) {
-                MiniGameViewManager gameManager = new MiniGameViewManager();
+                MiniViewManager gameManager = new MiniViewManager();
                 gameManager.startGame(mainStage);
             }
         });
