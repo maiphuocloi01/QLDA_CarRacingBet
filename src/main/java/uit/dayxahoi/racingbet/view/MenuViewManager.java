@@ -154,7 +154,8 @@ public class MenuViewManager {
 
             @Override
             public void handle(ActionEvent event) {
-                //showSubScene(shipChooserSubscene);
+                StoredView storedView = new StoredView();
+                storedView.startStore(mainStage);
             }
         });
     }
