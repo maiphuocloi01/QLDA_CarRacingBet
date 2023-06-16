@@ -1,24 +1,23 @@
 package uit.dayxahoi.racingbet.view;
 
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import uit.dayxahoi.racingbet.util.ResourceFile;
 
-public class StoredView extends Application {
+public class StoredView {
 
-    public static void main(String[] args) {
-        launch(args);
+
+    public StoredView() {
     }
 
-    @Override
-    public void start(Stage primaryStage) {
+    public void startStore(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/uit/dayxahoi/racingbet/view/Stored.fxml"));
-
+            Parent root = FXMLLoader.load(ResourceFile.getInstance().getResURL("view/Stored.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();

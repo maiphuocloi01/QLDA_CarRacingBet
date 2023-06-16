@@ -18,6 +18,14 @@ public class ResourceFile {
         return instance;
     }
 
+    public String getResPath(String filePath) {
+        return Objects.requireNonNull(MyApplication.class.getResource(filePath)).toString();
+    }
+
+    public URL getResURL(String filePath) {
+        return MyApplication.class.getResource(filePath);
+    }
+
     public String getImagePath(String imageName) {
         String path = "drawable/" + imageName;
         return Objects.requireNonNull(MyApplication.class.getResource(path)).toString();

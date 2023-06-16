@@ -10,72 +10,72 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="498.0" prefWidth="663.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/background.png');;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uit.dayxahoi.racingbet.controller.StoredController">
+<AnchorPane id="root" fx:id="root" prefHeight="610.0" prefWidth="1269.0" styleClass="root" stylesheets="@../Style/StoreStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uit.dayxahoi.racingbet.controller.StoredController">
    <children>
-      <Label layoutX="278.0" layoutY="22.0" prefHeight="36.0" prefWidth="137.0" text="CỬA HÀNG" textFill="#8f8b5f">
+      <Label layoutX="564.0" layoutY="14.0" prefHeight="83.0" prefWidth="241.0" text="CỬA HÀNG" textFill="#8f8b5f">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TabPane layoutX="189.0" layoutY="80.0" prefHeight="314.0" prefWidth="459.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tab" layoutX="501.0" layoutY="110.0" prefHeight="389.0" prefWidth="707.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="MAP">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: rgba(150, 111, 51, 0.5) rgba(150, 111, 51, 0.5) rgba(150, 111, 51, 0.5) rgba(150, 111, 51, 0.5);">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="666.0" style="-fx-background-color: rgba(150, 111, 51, 0.5) rgba(150, 111, 51, 0.5) rgba(150, 111, 51, 0.5) rgba(150, 111, 51, 0.5);">
                      <children>
-                        <Pane layoutX="15.0" layoutY="14.0" prefHeight="85.0" prefWidth="335.0">
+                        <Pane layoutX="15.0" layoutY="14.0" prefHeight="85.0" prefWidth="523.0">
                            <children>
-                              <ImageView fitHeight="59.0" fitWidth="115.0" layoutX="225.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="91.0" fitWidth="168.0" layoutX="352.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../drawable/Map2.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutY="16.0" prefHeight="53.0" prefWidth="225.0" text="Map nóng bỏng giá 5000" textFill="#798d08">
+                              <Label layoutY="16.0" prefHeight="53.0" prefWidth="304.0" text="Map nóng bỏng giá 5000" textFill="#798d08">
                                  <font>
-                                    <Font name="System Bold Italic" size="18.0" />
+                                    <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="15.0" layoutY="99.0" prefHeight="85.0" prefWidth="334.0">
+                        <Pane layoutX="15.0" layoutY="114.0" prefHeight="111.0" prefWidth="511.0">
                            <children>
-                              <ImageView fitHeight="99.0" fitWidth="104.0" layoutX="227.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="102.0" fitWidth="160.0" layoutX="351.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../drawable/Map3.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="2.0" layoutY="16.0" prefHeight="53.0" prefWidth="192.0" text="Set gây lú giá 7000" textFill="#798d08">
+                              <Label layoutY="30.0" prefHeight="53.0" prefWidth="275.0" text="Set gây lú giá 7000" textFill="#798d08">
                                  <font>
-                                    <Font name="System Bold Italic" size="18.0" />
+                                    <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="15.0" layoutY="184.0" prefHeight="85.0" prefWidth="331.0">
+                        <Pane layoutX="17.0" layoutY="227.0" prefHeight="103.0" prefWidth="526.0">
                            <children>
-                              <ImageView fitHeight="99.0" fitWidth="104.0" layoutX="224.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="89.0" fitWidth="162.0" layoutX="353.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../drawable/Map1.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="MapCoDienPane" layoutY="17.0" prefHeight="53.0" prefWidth="224.0" text="Map cổ điển giá 4000" textFill="#798d08">
+                              <Label fx:id="MapCoDienPane" layoutY="25.0" prefHeight="53.0" prefWidth="293.0" text="Map cổ điển giá 4000" textFill="#798d08">
                                  <font>
-                                    <Font name="System Bold Italic" size="18.0" />
+                                    <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Button fx:id="MuaMapNongBongButton" layoutX="365.0" layoutY="39.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaMapNongBongButton" layoutX="582.0" layoutY="39.0" mnemonicParsing="false" onMouseClicked="#muaMapNongBong" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaMapGayLuButton" layoutX="365.0" layoutY="124.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaMapGayLuButton" layoutX="582.0" layoutY="152.0" mnemonicParsing="false" onMouseClicked="#muaMapGayLu" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaMapCoDienButton" layoutX="365.0" layoutY="209.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaMapCoDienButton" layoutX="582.0" layoutY="261.0" mnemonicParsing="false" onMouseClicked="#muaMapCoDien" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -88,59 +88,59 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="271.0" prefWidth="359.0" style="-fx-background-color: rgba(150, 111, 51, 0.5);">
                      <children>
-                        <Pane layoutX="16.0" layoutY="16.0" mouseTransparent="true" prefHeight="85.0" prefWidth="331.0">
+                        <Pane layoutX="16.0" layoutY="16.0" mouseTransparent="true" prefHeight="97.0" prefWidth="490.0">
                            <children>
-                              <ImageView fitHeight="90.0" fitWidth="171.0" layoutX="234.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="106.0" fitWidth="123.0" layoutX="345.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../drawable/set1_genshin01.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutY="16.0" pickOnBounds="false" prefHeight="53.0" prefWidth="212.0" text="Set xe wibu giá 5000" textFill="#798d08">
+                              <Label layoutY="32.0" pickOnBounds="false" prefHeight="53.0" prefWidth="297.0" text="Set xe wibu giá 5000" textFill="#798d08">
                                  <font>
-                                    <Font name="System Bold Italic" size="18.0" />
+                                    <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Pane fx:id="SkinLichLamPane" layoutX="8.0" layoutY="102.0" prefHeight="79.0" prefWidth="342.0">
+                        <Pane fx:id="SkinLichLamPane" layoutX="8.0" layoutY="114.0" prefHeight="99.0" prefWidth="507.0">
                            <children>
-                              <ImageView fitHeight="95.0" fitWidth="101.0" layoutX="241.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="110.0" fitWidth="131.0" layoutX="352.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../drawable/set3_man05.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="7.0" layoutY="13.0" prefHeight="53.0" prefWidth="212.0" text="Set xe lịch lãm giá 6000" textFill="#798d08">
+                              <Label layoutX="14.0" layoutY="30.0" prefHeight="53.0" prefWidth="333.0" text="Set xe lịch lãm giá 6000" textFill="#798d08">
                                  <font>
-                                    <Font name="System Bold Italic" size="18.0" />
+                                    <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Pane layoutX="6.0" layoutY="193.0" prefHeight="91.0" prefWidth="349.0">
+                        <Pane layoutX="8.0" layoutY="225.0" prefHeight="113.0" prefWidth="483.0">
                            <children>
-                              <ImageView fitHeight="95.0" fitWidth="99.0" layoutX="251.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="103.0" fitWidth="137.0" layoutX="354.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../drawable/set2_pokemon04.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="SkinDXHPane" layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="237.0" text="Set xe đáy xã hội giá 4000" textFill="#798d08">
+                              <Label fx:id="SkinDXHPane" layoutX="14.0" layoutY="30.0" prefHeight="53.0" prefWidth="306.0" text="Set xe đáy xã hội giá 4000" textFill="#798d08">
                                  <font>
-                                    <Font name="System Bold Italic" size="18.0" />
+                                    <Font name="System Bold Italic" size="24.0" />
                                  </font>
                               </Label>
                            </children>
                         </Pane>
-                        <Button fx:id="MuaSkinWibuButton" layoutX="367.0" layoutY="51.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaSkinWibuButton" layoutX="576.0" layoutY="59.0" mnemonicParsing="false" onMouseClicked="#muaSkinWibu" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaSkinDXHButton" layoutX="367.0" layoutY="227.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaSkinDXHButton" layoutX="576.0" layoutY="264.0" mnemonicParsing="false" onMouseClicked="#muaSkinDXH" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="MuaSkinLichLamButton" layoutX="367.0" layoutY="131.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="67.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');" text="MUA" textFill="#526e1f">
+                        <Button fx:id="MuaSkinLichLamButton" layoutX="576.0" layoutY="162.0" mnemonicParsing="false" onMouseClicked="#muaSkinLichLam" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="MUA" textFill="#526e1f">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
@@ -151,16 +151,16 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Label fx:id="HienThiTienLabel" alignment="CENTER_RIGHT" layoutX="224.0" layoutY="429.0" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: rgba(150, 111, 51, 5);" text="20000VND" />
-      <Button fx:id="QuayLaiButton" layoutX="521.0" layoutY="429.0" mnemonicParsing="false" onMouseClicked="#quayLai" prefHeight="36.0" prefWidth="96.0" style="-fx-background-image: url('file:/D:/IntelliJ/QLDA_CarRacingBet/src/main/resources/uit/dayxahoi/racingbet/drawable/red_button.png');;" text="QUAY LẠI" />
-      <ImageView fitHeight="314.0" fitWidth="160.0" layoutX="20.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="HienThiTienLabel" alignment="CENTER_RIGHT" layoutX="720.0" layoutY="531.0" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: rgba(150, 111, 51, 5);" text="20000VND" />
+      <Button fx:id="QuayLaiButton" layoutX="991.0" layoutY="531.0" mnemonicParsing="false" onMouseClicked="#quayLai" prefHeight="36.0" prefWidth="96.0" style="-fx-background-color: orange;" text="QUAY LẠI" />
+      <ImageView fx:id="LinhVatLabel" fitHeight="276.0" fitWidth="282.0" layoutX="84.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../drawable/player.png" />
          </image>
       </ImageView>
-      <Label layoutX="5.0" layoutY="277.0" text="Mua hàng đi mấy anh zaii :3" textFill="#728d0f">
+      <Label layoutX="102.0" layoutY="397.0" prefHeight="66.0" prefWidth="282.0" text="Mua hàng đi mấy anh zaii :3" textFill="#728d0f">
          <font>
-            <Font name="System Bold Italic" size="13.0" />
+            <Font name="System Bold Italic" size="21.0" />
          </font>
       </Label>
    </children>

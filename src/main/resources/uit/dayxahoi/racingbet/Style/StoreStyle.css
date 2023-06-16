@@ -1,3 +1,8 @@
-.root{
-    -fx-background-image: url('/uit/dayxahoi/racingbet/drawable/background.png');
+.root {
+    -fx-background-image: url('../drawable/background.png');
+    -fx-background-size: cover; /* Tuỳ chọn: điều chỉnh kích thước ảnh nền */
+}
+
+.button{
+    -fx-bc-background-image: url('../drawable/red_button_pressed.png')
 }

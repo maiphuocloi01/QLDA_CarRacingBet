@@ -1,12 +1,19 @@
 package uit.dayxahoi.racingbet.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class StoredController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class StoredController implements Initializable {
 
     @FXML
     private Label HienThiTienLabel;
@@ -80,4 +87,18 @@ public class StoredController {
         stage.close();
     }
 
+    @FXML
+    private AnchorPane root;
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        // Lấy kích thước màn hình
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+        // Thiết lập kích thước cho AnchorPane
+        root.setPrefWidth(screenBounds.getWidth());
+        root.setPrefHeight(screenBounds.getHeight());
+
+    }
 }
