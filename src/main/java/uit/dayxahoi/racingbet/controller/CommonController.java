@@ -18,8 +18,8 @@ public class CommonController {
         return instance;
     }
 
-    public void writeObjectToFile(Object serObj) {
-        File file = new File("data/user", "user.dat");
+    public void writeObjectToFile(Object serObj, String username) {
+        File file = new File("data/user", username + ".dat");
         File fileParent = file.getParentFile();
         if (fileParent.mkdirs()) {
             System.out.println("success");
@@ -38,8 +38,8 @@ public class CommonController {
         }
     }
 
-    public Object readObjectFromFile() {
-        File file = new File("data/user", "user.dat");
+    public Object readObjectFromFile(String username) {
+        File file = new File("data/user", username + ".dat");
         Object result = null;
         try {
             FileInputStream fis = new FileInputStream(file);
@@ -51,8 +51,8 @@ public class CommonController {
         return result;
     }
 
-    public boolean isExistData() {
-        File file = new File("data/user", "user.dat");
+    public boolean isExistData(String username) {
+        File file = new File("data/user", username + ".dat");
         return file.exists();
     }
 

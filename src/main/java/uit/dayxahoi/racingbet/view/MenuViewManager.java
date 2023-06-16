@@ -12,6 +12,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.model.DXHButton;
+import uit.dayxahoi.racingbet.model.ItemStore;
 import uit.dayxahoi.racingbet.model.User;
 import uit.dayxahoi.racingbet.util.ResourceFile;
 
@@ -48,11 +49,13 @@ public class MenuViewManager {
 
     public MenuViewManager() {
 
-        if (CommonController.getInstance().isExistData()) {
-            user = (User) CommonController.getInstance().readObjectFromFile();
+        if (CommonController.getInstance().isExistData("abc")) {
+            user = (User) CommonController.getInstance().readObjectFromFile("abc");
         } else {
             user = new User("abc", "abc", 100);
-            CommonController.getInstance().writeObjectToFile(user);
+            ItemStore itemStore = new ItemStore();
+            user.setItemStore(itemStore);
+            CommonController.getInstance().writeObjectToFile(user, "abc");
         }
 
 

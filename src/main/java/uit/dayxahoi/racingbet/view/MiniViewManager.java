@@ -63,7 +63,7 @@ public class MiniViewManager {
     private User user;
 
     public void startGame(Stage primaryStage) {
-        user = (User) CommonController.getInstance().readObjectFromFile();
+        user = (User) CommonController.getInstance().readObjectFromFile("abc");
         // Exit button
         exitButton.setLayoutY((bounds.getMaxY() / 15) - 10);
         exitButton.setLayoutX(13 * bounds.getMaxX() / 14);
@@ -131,7 +131,7 @@ public class MiniViewManager {
         if (tube.getTranslateX() < 35 && incrementOnce) {
             score++;
             user.setGold(user.getGold() + 1);
-            CommonController.getInstance().writeObjectToFile(user);
+            CommonController.getInstance().writeObjectToFile(user, "abc");
             scoreLabel.setText("Score: " + score);
             incrementOnce = false;
         }

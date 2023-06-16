@@ -9,6 +9,8 @@ public class User implements Serializable {
     private String password;
     private int gold;
 
+    private ItemStore itemStore;
+
     public User(String username, String password, int gold) {
         this.username = username;
         this.password = password;
@@ -37,5 +39,13 @@ public class User implements Serializable {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public ItemStore getItemStore() {
+        return itemStore;
+    }
+
+    public void setItemStore(ItemStore itemStore) {
+        this.itemStore = itemStore;
     }
 }
