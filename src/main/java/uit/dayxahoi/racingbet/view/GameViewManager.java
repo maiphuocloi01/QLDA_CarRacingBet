@@ -30,6 +30,7 @@ import javafx.util.Duration;
 import uit.dayxahoi.racingbet.MyApplication;
 import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.model.DXHButton;
+import uit.dayxahoi.racingbet.model.ItemStore;
 import uit.dayxahoi.racingbet.model.User;
 import uit.dayxahoi.racingbet.util.ResourceFile;
 
@@ -46,10 +47,9 @@ public class GameViewManager {
     private static final double GAME_HEIGHT = bounds.getHeight();
     private final ObservableList<String> options = FXCollections.observableArrayList("1ST", "2ND", "3RD", "4TH", "5TH");
 
-    private final ObservableList<String> optionsMap = FXCollections.observableArrayList("1ST", "2ND", "3RD");
+    private final ObservableList<String> optionsMap;
 
-    private final ObservableList<String> optionsSkin = FXCollections.observableArrayList("1ST", "2ND", "3RD");
-
+    private final ObservableList<String> optionsSkin;
     //Parent
     private final Pane mainPane = new Pane();
 
@@ -61,8 +61,8 @@ public class GameViewManager {
     //View
     private ImageView menuPanelBackground = new ImageView();
     private ComboBox<String> comboBox = new ComboBox<>(options);
-    private ComboBox<String> comboBoxMap = new ComboBox<>(optionsMap);
-    private ComboBox<String> comboBoxSkin = new ComboBox<>(optionsSkin);
+    private ComboBox<String> comboBoxMap;
+    private ComboBox<String> comboBoxSkin;
     private Label instructionLabel = new Label("Enter a Betting Amount: ");
     private Label selectCarLabel = new Label("Select Car: ");
     private Label selectMapLabel = new Label("Select Map: ");
@@ -71,6 +71,7 @@ public class GameViewManager {
     private TextField textField = new TextField();
     private static Label timerLabel = new Label();
     private static Label goldLabel = new Label();
+    private static Label dolaLabel = new Label();
     private DXHButton startButton = new DXHButton("Play");
     private DXHButton resetButton = new DXHButton("Reset");
 
@@ -109,10 +110,38 @@ public class GameViewManager {
 
         user = (User) CommonController.getInstance().readObjectFromFile(userName);
         goldObs.setValue(user.getGold());
+
+
+        optionsMap = FXCollections.observableArrayList("Default");
+
+        optionsSkin = FXCollections.observableArrayList("Default");
+        comboBoxMap = new ComboBox<>(optionsMap);
+        comboBoxSkin = new ComboBox<>(optionsSkin);
+
+        ItemStore itemStore = user.getItemStore();
+        if (itemStore.isItemMap2()) {
+            optionsMap.add("Forest");
+        }
+        if (itemStore.isItemMap3()) {
+            optionsMap.add("Desert");
+        }
+
+        if (itemStore.isItemSkin1()) {
+            optionsSkin.add("DXH");
+        }
+        if (itemStore.isItemSkin2()) {
+            optionsSkin.add("VIP");
+        }
+        if (itemStore.isItemSkin3()) {
+            optionsSkin.add("Wibu");
+        }
+
+
         loadBackground(mainPane);
         initView();
         mainPane.getChildren().add(imgSelectLine);
         mainPane.getChildren().add(goldLabel);
+        mainPane.getChildren().add(dolaLabel);
         showDialog();
         drawAllCar(false, "0");
     }
@@ -138,12 +167,18 @@ public class GameViewManager {
         menuPanelBackground.setFitWidth(bounds.getWidth() / 2);
         menuPanelBackground.setFitHeight(2 * bounds.getHeight() / 3);
 
-        // Đếm thời gian bắt đầu
+        // Gold
         goldLabel.textProperty().bind(goldObs.asString());
         goldLabel.setTextFill(Color.GOLD);
         goldLabel.setLayoutX((bounds.getMaxX() / 15));
         goldLabel.setLayoutY((bounds.getMaxY() / 15));
         goldLabel.setFont(Font.font("Impact", FontWeight.BOLD, 60));
+
+        dolaLabel.setText("$");
+        dolaLabel.setTextFill(Color.GOLD);
+        dolaLabel.setLayoutX((bounds.getMaxX() / 15) - 35);
+        dolaLabel.setLayoutY((bounds.getMaxY() / 15));
+        dolaLabel.setFont(Font.font("Impact", FontWeight.BOLD, 60));
 
         // Select line
         String pathSelectLine = ResourceFile.getInstance().getImagePath("select_line.png");
@@ -204,7 +239,7 @@ public class GameViewManager {
         });
 
         // Combox chọn map
-        comboBoxMap.setPromptText("Select Map");
+        comboBoxMap.setPromptText("Default");
         comboBoxMap.setLayoutX((2 * bounds.getMaxX() / 4) + 100);
         comboBoxMap.setLayoutY((bounds.getMaxY() / 5) + 100);
         comboBoxMap.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -220,10 +255,8 @@ public class GameViewManager {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item);
-                            if (item.contains("1ST")) setTextFill(Color.ORANGERED);
-                            else if (item.contains("2ND")) setTextFill(Color.DEEPPINK);
-                            else if (item.contains("3RD")) setTextFill(Color.GREENYELLOW);
-                            else if (item.contains("4TH")) setTextFill(Color.PURPLE);
+                            if (item.contains("Forest")) setTextFill(Color.ORANGERED);
+                            else if (item.contains("Desert")) setTextFill(Color.DEEPPINK);
                             else setTextFill(Color.DEEPSKYBLUE);
                         } else setText(null);
                     }
@@ -233,12 +266,14 @@ public class GameViewManager {
         });
         comboBoxMap.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
             public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, Object oldValue, Object newValue) {
-                mapChoice = newValue.toString();
+                int pos = (int) newValue;
+                mapChoice = optionsMap.get(pos);
                 changeImageBackground(mapChoice);
+                System.out.println("MAP: " + mapChoice);
             }
         });
 
-        comboBoxSkin.setPromptText("Select Skin");
+        comboBoxSkin.setPromptText("Default");
         comboBoxSkin.setLayoutX((2 * bounds.getMaxX() / 4) + 100);
         comboBoxSkin.setLayoutY((bounds.getMaxY() / 5) + 150);
         comboBoxSkin.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -254,10 +289,9 @@ public class GameViewManager {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item);
-                            if (item.contains("1ST")) setTextFill(Color.ORANGERED);
-                            else if (item.contains("2ND")) setTextFill(Color.DEEPPINK);
-                            else if (item.contains("3RD")) setTextFill(Color.GREENYELLOW);
-                            else if (item.contains("4TH")) setTextFill(Color.PURPLE);
+                            if (item.contains("DXH")) setTextFill(Color.ORANGERED);
+                            else if (item.contains("VIP")) setTextFill(Color.DEEPPINK);
+                            else if (item.contains("Wibu")) setTextFill(Color.GREENYELLOW);
                             else setTextFill(Color.DEEPSKYBLUE);
                         } else setText(null);
                     }
@@ -267,8 +301,10 @@ public class GameViewManager {
         });
         comboBoxSkin.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Object>() {
             public void changed(@SuppressWarnings("rawtypes") ObservableValue observable, Object oldValue, Object newValue) {
-                skinChoice = newValue.toString();
+                int pos = (int) newValue;
+                skinChoice = optionsSkin.get(pos);
                 drawAllCar(false, skinChoice);
+                System.out.println("SKIN: " + skinChoice);
             }
         });
 
@@ -492,10 +528,10 @@ public class GameViewManager {
     private void changeImageBackground(String map) {
         System.out.println("#changeImageBackground IN: " + map);
         String imgBackground;
-        if (map.equals("1")) {
-            imgBackground = ResourceFile.getInstance().getImagePath("Map2.png");
-        } else if (map.equals("2")) {
+        if (map.equals("Forest")) {
             imgBackground = ResourceFile.getInstance().getImagePath("Map3.png");
+        } else if (map.equals("Desert")) {
+            imgBackground = ResourceFile.getInstance().getImagePath("Map2.png");
         } else {
             imgBackground = ResourceFile.getInstance().getImagePath("Map1.png");
         }
@@ -512,7 +548,7 @@ public class GameViewManager {
     private static String changeSkinCar(Color stripesColor, String skin) {
         System.out.println("#changeSkinCar IN: " + skin);
         String imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin01.png");
-        if (skin.equals("0")) {
+        if (skin.equals("Wibu")) {
             if (stripesColor.equals(Color.ORANGERED)) {
                 imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin01.png");
             } else if (stripesColor.equals(Color.DEEPPINK)) {
@@ -524,19 +560,7 @@ public class GameViewManager {
             } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
                 imgBackground = ResourceFile.getInstance().getImagePath("set1_genshin05.png");
             }
-        } else if (skin.equals("1")) {
-            if (stripesColor.equals(Color.ORANGERED)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon01.png");
-            } else if (stripesColor.equals(Color.DEEPPINK)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon02.png");
-            } else if (stripesColor.equals(Color.GREENYELLOW)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon03.png");
-            } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon04.png");
-            } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
-                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon05.png");
-            }
-        } else {
+        }  else if (skin.equals("VIP")){
             if (stripesColor.equals(Color.ORANGERED)) {
                 imgBackground = ResourceFile.getInstance().getImagePath("set3_man01.png");
             } else if (stripesColor.equals(Color.DEEPPINK)) {
@@ -547,6 +571,30 @@ public class GameViewManager {
                 imgBackground = ResourceFile.getInstance().getImagePath("set3_man04.png");
             } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
                 imgBackground = ResourceFile.getInstance().getImagePath("set3_man05.png");
+            }
+        } else if (skin.equals("DXH")){
+            if (stripesColor.equals(Color.ORANGERED)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set4_DoanCongTri01.png");
+            } else if (stripesColor.equals(Color.DEEPPINK)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set4_DoanCongTri02.png");
+            } else if (stripesColor.equals(Color.GREENYELLOW)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set4_DoanCongTri03.png");
+            } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set4_DoanCongTri04.png");
+            } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set4_DoanCongTri05.png");
+            }
+        } else {
+            if (stripesColor.equals(Color.ORANGERED)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon01.png");
+            } else if (stripesColor.equals(Color.DEEPPINK)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon02.png");
+            } else if (stripesColor.equals(Color.GREENYELLOW)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon03.png");
+            } else if (stripesColor.equals(Color.MEDIUMPURPLE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon04.png");
+            } else if (stripesColor.equals(Color.DEEPSKYBLUE)) {
+                imgBackground = ResourceFile.getInstance().getImagePath("set2_pokemon05.png");
             }
         }
         return imgBackground;
