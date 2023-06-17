@@ -62,7 +62,7 @@ public class StoredController implements Initializable {
             user.setGold(user.getGold() - itemStore.getItemMap1Price());
             itemStore = user.getItemStore();
             CommonController.getInstance().writeObjectToFile(user, userName);
-            HienThiTienLabel.setText(user.getGold() + "$");
+            HienThiTienLabel.setText("$" + user.getGold());
             MuaMapCoDienButton.setDisable(true);
         } else {
             String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
@@ -80,7 +80,7 @@ public class StoredController implements Initializable {
             user.getItemStore().setItemMap2(true);
             user.setGold(user.getGold() - itemStore.getItemMap2Price());
             CommonController.getInstance().writeObjectToFile(user, userName);
-            HienThiTienLabel.setText(user.getGold() + "$");
+            HienThiTienLabel.setText("$" + user.getGold());
             MuaMapGayLuButton.setDisable(true);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -109,7 +109,7 @@ public class StoredController implements Initializable {
             user.setGold(user.getGold() - itemStore.getItemMap3Price());
             itemStore = user.getItemStore();
             CommonController.getInstance().writeObjectToFile(user, userName);
-            HienThiTienLabel.setText(user.getGold() + "$");
+            HienThiTienLabel.setText("$" + user.getGold());
             MuaMapNongBongButton.setDisable(true);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -134,7 +134,7 @@ public class StoredController implements Initializable {
             user.setGold(user.getGold() - itemStore.getItemSkin1Price());
             itemStore = user.getItemStore();
             CommonController.getInstance().writeObjectToFile(user, userName);
-            HienThiTienLabel.setText(user.getGold() + "$");
+            HienThiTienLabel.setText("$" + user.getGold());
             MuaSkinDXHButton.setDisable(true);
         } else {
             String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
@@ -153,7 +153,7 @@ public class StoredController implements Initializable {
             user.setGold(user.getGold() - itemStore.getItemSkin2Price());
             itemStore = user.getItemStore();
             CommonController.getInstance().writeObjectToFile(user, userName);
-            HienThiTienLabel.setText(user.getGold() + "$");
+            HienThiTienLabel.setText("$" + user.getGold());
             MuaSkinLichLamButton.setDisable(true);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -179,7 +179,7 @@ public class StoredController implements Initializable {
             user.setGold(user.getGold() - itemStore.getItemSkin3Price());
             itemStore = user.getItemStore();
             CommonController.getInstance().writeObjectToFile(user, userName);
-            HienThiTienLabel.setText(user.getGold() + "$");
+            HienThiTienLabel.setText("$" + user.getGold());
             MuaSkinWibuButton.setDisable(true);
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -223,7 +223,7 @@ public class StoredController implements Initializable {
         user = (User) CommonController.getInstance().readObjectFromFile(userName);
         itemStore = user.getItemStore();
 
-        HienThiTienLabel.setText(user.getGold() + "$");
+        HienThiTienLabel.setText("$" + user.getGold());
 
         if (itemStore.isItemMap2()) {
             MuaMapGayLuButton.setDisable(true);

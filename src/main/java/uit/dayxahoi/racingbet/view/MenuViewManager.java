@@ -5,9 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import uit.dayxahoi.racingbet.MyApplication;
@@ -45,6 +49,8 @@ public class MenuViewManager {
 
     User user;
 
+    private static Label goldLabel = new Label();
+
     //List<ShipPicker> shipsList;
     //private SHIP choosenShip;
 
@@ -54,15 +60,22 @@ public class MenuViewManager {
         if (CommonController.getInstance().isExistData(userName)) {
             user = (User) CommonController.getInstance().readObjectFromFile(userName);
         } else {
-            user = new User("abc", "abc", 100);
+            user = new User(userName, userName, 100);
             ItemStore itemStore = new ItemStore();
             user.setItemStore(itemStore);
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
         }
 
+        // Gold
+        goldLabel.setText("$" + user.getGold());
+        goldLabel.setTextFill(Color.GOLD);
+        goldLabel.setLayoutX((12*bounds.getMaxX() / 15));
+        goldLabel.setLayoutY((bounds.getMaxY() / 15));
+        goldLabel.setFont(Font.font("Impact", FontWeight.BOLD, 60));
 
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
+        mainPane.getChildren().add(goldLabel);
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
@@ -115,6 +128,8 @@ public class MenuViewManager {
         mainStage = stage;
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
+        goldLabel.setText("$" + user.getGold());
+        mainPane.getChildren().add(goldLabel);
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage.setScene(mainScene);
         createButtons();
