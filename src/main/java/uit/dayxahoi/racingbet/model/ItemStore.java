@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 public class ItemStore implements Serializable {
 
-    private int itemSkin1Price = 5;
-    private boolean isItemSkin1 = true;
-    private int itemSkin2Price = 5;
+    private int itemSkin1Price = 500;
+    private boolean isItemSkin1;
+    private int itemSkin2Price = 500;
     private boolean isItemSkin2;
-    private int itemSkin3Price = 10;
+    private int itemSkin3Price = 1000;
     private boolean isItemSkin3;
 
-    private int itemMap1Price = 5;
+    private int itemMap1Price = 500;
     private boolean isItemMap1 = true;
-    private int itemMap2Price = 5;
+    private int itemMap2Price = 500;
     private boolean isItemMap2;
-    private int itemMap3Price = 10;
+    private int itemMap3Price = 1000;
     private boolean isItemMap3;
 
     public ItemStore() {

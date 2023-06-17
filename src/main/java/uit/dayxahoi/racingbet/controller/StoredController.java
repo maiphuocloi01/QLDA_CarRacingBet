@@ -56,7 +56,21 @@ public class StoredController implements Initializable {
     @FXML
     void muaMapCoDien(MouseEvent event) {
         //MuaMapCoDienButton.setStyle("-fx-background-color: rgba(143,131,121,0.5);");
-        MuaMapCoDienButton.setDisable(true);
+        Stage stage = (Stage) MuaMapCoDienButton.getScene().getWindow();
+        if (user.getGold() >= itemStore.getItemMap1Price()) {
+            user.getItemStore().setItemMap1(true);
+            user.setGold(user.getGold() - itemStore.getItemMap1Price());
+            itemStore = user.getItemStore();
+            CommonController.getInstance().writeObjectToFile(user, userName);
+            HienThiTienLabel.setText(user.getGold() + "$");
+            MuaMapCoDienButton.setDisable(true);
+        } else {
+            String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
+            int toastMsgTime = 2000; //2 seconds
+            int fadeInTime = 500; //0.5 seconds
+            int fadeOutTime= 500; //0.5 seconds
+            Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+        }
     }
 
     @FXML
@@ -114,8 +128,21 @@ public class StoredController implements Initializable {
 
     @FXML
     void muaSkinDXH(MouseEvent event) {
-        MuaSkinDXHButton.setDisable(true);
-
+        Stage stage = (Stage) MuaSkinDXHButton.getScene().getWindow();
+        if (user.getGold() >= itemStore.getItemSkin1Price()) {
+            user.getItemStore().setItemSkin1(true);
+            user.setGold(user.getGold() - itemStore.getItemSkin1Price());
+            itemStore = user.getItemStore();
+            CommonController.getInstance().writeObjectToFile(user, userName);
+            HienThiTienLabel.setText(user.getGold() + "$");
+            MuaSkinDXHButton.setDisable(true);
+        } else {
+            String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
+            int toastMsgTime = 2000; //2 seconds
+            int fadeInTime = 500; //0.5 seconds
+            int fadeOutTime= 500; //0.5 seconds
+            Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+        }
     }
 
     @FXML
@@ -198,10 +225,10 @@ public class StoredController implements Initializable {
 
         HienThiTienLabel.setText(user.getGold() + "$");
 
-        if (itemStore.isItemMap3()) {
+        if (itemStore.isItemMap2()) {
             MuaMapGayLuButton.setDisable(true);
         }
-        if (itemStore.isItemMap2()) {
+        if (itemStore.isItemMap3()) {
             MuaMapNongBongButton.setDisable(true);
         }
         if (itemStore.isItemMap1()) {
