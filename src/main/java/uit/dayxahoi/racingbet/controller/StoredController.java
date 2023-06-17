@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import uit.dayxahoi.racingbet.MyApplication;
 import uit.dayxahoi.racingbet.model.ItemStore;
 import uit.dayxahoi.racingbet.model.User;
 import uit.dayxahoi.racingbet.util.Toast;
@@ -49,6 +50,8 @@ public class StoredController implements Initializable {
     @FXML
     private Label SkinDXHPane;
 
+    String userName = MyApplication.getInstance().getStorage().userName;
+
     @FXML
     void muaMapCoDien(MouseEvent event) {
         //MuaMapCoDienButton.setStyle("-fx-background-color: rgba(143,131,121,0.5);");
@@ -62,7 +65,7 @@ public class StoredController implements Initializable {
             user.getItemStore().setItemMap2(true);
             user.setGold(user.getGold() - itemStore.getItemMap2Price());
             itemStore = user.getItemStore();
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaMapGayLuButton.setDisable(true);
         } else {
@@ -82,7 +85,7 @@ public class StoredController implements Initializable {
             user.getItemStore().setItemMap3(true);
             user.setGold(user.getGold() - itemStore.getItemMap3Price());
             itemStore = user.getItemStore();
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaMapNongBongButton.setDisable(true);
         } else {
@@ -107,7 +110,7 @@ public class StoredController implements Initializable {
             user.getItemStore().setItemSkin2(true);
             user.setGold(user.getGold() - itemStore.getItemSkin2Price());
             itemStore = user.getItemStore();
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaSkinLichLamButton.setDisable(true);
         } else {
@@ -127,7 +130,7 @@ public class StoredController implements Initializable {
             user.getItemStore().setItemSkin3(true);
             user.setGold(user.getGold() - itemStore.getItemSkin3Price());
             itemStore = user.getItemStore();
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaSkinWibuButton.setDisable(true);
         } else {
@@ -163,7 +166,7 @@ public class StoredController implements Initializable {
         root.setPrefWidth(screenBounds.getWidth());
         root.setPrefHeight(screenBounds.getHeight());
 
-        user = (User) CommonController.getInstance().readObjectFromFile("abc");
+        user = (User) CommonController.getInstance().readObjectFromFile(userName);
         itemStore = user.getItemStore();
 
         HienThiTienLabel.setText(user.getGold() + "$");
