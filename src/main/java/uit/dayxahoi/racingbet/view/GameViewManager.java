@@ -104,7 +104,7 @@ public class GameViewManager {
 
     public GameViewManager() {
 
-        user = (User) CommonController.getInstance().readObjectFromFile();
+        user = (User) CommonController.getInstance().readObjectFromFile("abc");
         goldObs.setValue(user.getGold());
         loadBackground(mainPane);
         initView();
@@ -370,7 +370,7 @@ public class GameViewManager {
 
                         user.setGold(user.getGold() - bet);
                         goldObs.setValue(user.getGold());
-                        CommonController.getInstance().writeObjectToFile(user);
+                        CommonController.getInstance().writeObjectToFile(user, "abc");
                         // Remove old pane
                         //paneRacing.getChildren().remove(paneRace);
 
@@ -697,7 +697,7 @@ public class GameViewManager {
                     changingLabel.setText(result);
                     user.setGold(user.getGold() + resultBet);
                     goldObs.setValue(user.getGold());
-                    CommonController.getInstance().writeObjectToFile(user);
+                    CommonController.getInstance().writeObjectToFile(user, "abc");
                     // Can't Click reset until race is finish
                     resetButton.setDisable(false);
                     //callBack.runSuccess();

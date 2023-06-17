@@ -30,7 +30,7 @@
                                     <Image url="@../drawable/Map2.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutY="16.0" prefHeight="53.0" prefWidth="304.0" text="Map nóng bỏng giá 5000" textFill="#798d08">
+                              <Label layoutY="16.0" prefHeight="53.0" prefWidth="304.0" text="Map nóng bỏng giá 1000" textFill="#798d08">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>
@@ -44,7 +44,7 @@
                                     <Image url="@../drawable/Map3.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutY="30.0" prefHeight="53.0" prefWidth="275.0" text="Set gây lú giá 7000" textFill="#798d08">
+                              <Label layoutY="30.0" prefHeight="53.0" prefWidth="275.0" text="Set gây lú giá 500" textFill="#798d08">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>
@@ -58,7 +58,7 @@
                                     <Image url="@../drawable/Map1.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="MapCoDienPane" layoutY="25.0" prefHeight="53.0" prefWidth="293.0" text="Map cổ điển giá 4000" textFill="#798d08">
+                              <Label fx:id="MapCoDienPane" layoutY="25.0" prefHeight="53.0" prefWidth="293.0" text="Map cổ điển giá 500" textFill="#798d08">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>
@@ -95,7 +95,7 @@
                                     <Image url="@../drawable/set1_genshin01.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutY="32.0" pickOnBounds="false" prefHeight="53.0" prefWidth="297.0" text="Set xe wibu giá 5000" textFill="#798d08">
+                              <Label layoutY="32.0" pickOnBounds="false" prefHeight="53.0" prefWidth="297.0" text="Set xe wibu giá 1000" textFill="#798d08">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>
@@ -109,7 +109,7 @@
                                     <Image url="@../drawable/set3_man05.png" />
                                  </image>
                               </ImageView>
-                              <Label layoutX="14.0" layoutY="30.0" prefHeight="53.0" prefWidth="333.0" text="Set xe lịch lãm giá 6000" textFill="#798d08">
+                              <Label layoutX="14.0" layoutY="30.0" prefHeight="53.0" prefWidth="333.0" text="Set xe lịch lãm giá 500" textFill="#798d08">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>
@@ -123,7 +123,7 @@
                                     <Image url="@../drawable/set2_pokemon04.png" />
                                  </image>
                               </ImageView>
-                              <Label fx:id="SkinDXHPane" layoutX="14.0" layoutY="30.0" prefHeight="53.0" prefWidth="306.0" text="Set xe đáy xã hội giá 4000" textFill="#798d08">
+                              <Label fx:id="SkinDXHPane" layoutX="14.0" layoutY="30.0" prefHeight="53.0" prefWidth="306.0" text="Set xe đáy xã hội giá 500" textFill="#798d08">
                                  <font>
                                     <Font name="System Bold Italic" size="24.0" />
                                  </font>

@@ -9,6 +9,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import uit.dayxahoi.racingbet.model.ItemStore;
+import uit.dayxahoi.racingbet.model.User;
+import uit.dayxahoi.racingbet.util.Toast;
+import uit.dayxahoi.racingbet.view.MenuViewManager;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,14 +57,41 @@ public class StoredController implements Initializable {
 
     @FXML
     void muaMapGayLu(MouseEvent event) {
-        MuaMapGayLuButton.setDisable(true);
+        Stage stage = (Stage) MuaMapGayLuButton.getScene().getWindow();
+        if (user.getGold() >= itemStore.getItemMap2Price()) {
+            user.getItemStore().setItemMap2(true);
+            user.setGold(user.getGold() - itemStore.getItemMap2Price());
+            itemStore = user.getItemStore();
+            CommonController.getInstance().writeObjectToFile(user, "abc");
+            HienThiTienLabel.setText(user.getGold() + "$");
+            MuaMapGayLuButton.setDisable(true);
+        } else {
+            String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
+            int toastMsgTime = 2000; //2 seconds
+            int fadeInTime = 500; //0.5 seconds
+            int fadeOutTime= 500; //0.5 seconds
+            Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+        }
 
     }
 
     @FXML
     void muaMapNongBong(MouseEvent event) {
-        MuaMapNongBongButton.setDisable(true);
-
+        Stage stage = (Stage) MuaMapNongBongButton.getScene().getWindow();
+        if (user.getGold() >= itemStore.getItemMap3Price()) {
+            user.getItemStore().setItemMap3(true);
+            user.setGold(user.getGold() - itemStore.getItemMap3Price());
+            itemStore = user.getItemStore();
+            CommonController.getInstance().writeObjectToFile(user, "abc");
+            HienThiTienLabel.setText(user.getGold() + "$");
+            MuaMapNongBongButton.setDisable(true);
+        } else {
+            String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
+            int toastMsgTime = 2000; //2 seconds
+            int fadeInTime = 500; //0.5 seconds
+            int fadeOutTime= 500; //0.5 seconds
+            Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+        }
     }
 
     @FXML
@@ -71,24 +102,56 @@ public class StoredController implements Initializable {
 
     @FXML
     void muaSkinLichLam(MouseEvent event) {
-        MuaSkinLichLamButton.setDisable(true);
+        Stage stage = (Stage) MuaSkinLichLamButton.getScene().getWindow();
+        if (user.getGold() >= itemStore.getItemSkin2Price()) {
+            user.getItemStore().setItemSkin2(true);
+            user.setGold(user.getGold() - itemStore.getItemSkin2Price());
+            itemStore = user.getItemStore();
+            CommonController.getInstance().writeObjectToFile(user, "abc");
+            HienThiTienLabel.setText(user.getGold() + "$");
+            MuaSkinLichLamButton.setDisable(true);
+        } else {
+            String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
+            int toastMsgTime = 2000; //2 seconds
+            int fadeInTime = 500; //0.5 seconds
+            int fadeOutTime= 500; //0.5 seconds
+            Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+        }
 
     }
 
     @FXML
     void muaSkinWibu(MouseEvent event) {
-        MuaSkinWibuButton.setDisable(true);
-
+        Stage stage = (Stage) MuaSkinWibuButton.getScene().getWindow();
+        if (user.getGold() >= itemStore.getItemSkin3Price()) {
+            user.getItemStore().setItemSkin3(true);
+            user.setGold(user.getGold() - itemStore.getItemSkin3Price());
+            itemStore = user.getItemStore();
+            CommonController.getInstance().writeObjectToFile(user, "abc");
+            HienThiTienLabel.setText(user.getGold() + "$");
+            MuaSkinWibuButton.setDisable(true);
+        } else {
+            String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
+            int toastMsgTime = 2000; //2 seconds
+            int fadeInTime = 500; //0.5 seconds
+            int fadeOutTime= 500; //0.5 seconds
+            Toast.makeText(stage, toastMsg, toastMsgTime, fadeInTime, fadeOutTime);
+        }
     }
 
     @FXML
     void quayLai(MouseEvent event) {
         Stage stage = (Stage) QuayLaiButton.getScene().getWindow();
-        stage.close();
+        //stage.close();
+        MenuViewManager manager = new MenuViewManager();
+        manager.backMenu(stage);
     }
 
     @FXML
     private AnchorPane root;
+
+    private User user;
+    private ItemStore itemStore;
 
 
     @Override
@@ -99,6 +162,31 @@ public class StoredController implements Initializable {
         // Thiết lập kích thước cho AnchorPane
         root.setPrefWidth(screenBounds.getWidth());
         root.setPrefHeight(screenBounds.getHeight());
+
+        user = (User) CommonController.getInstance().readObjectFromFile("abc");
+        itemStore = user.getItemStore();
+
+        HienThiTienLabel.setText(user.getGold() + "$");
+
+        if (itemStore.isItemMap3()) {
+            MuaMapGayLuButton.setDisable(true);
+        }
+        if (itemStore.isItemMap2()) {
+            MuaMapNongBongButton.setDisable(true);
+        }
+        if (itemStore.isItemMap1()) {
+            MuaMapCoDienButton.setDisable(true);
+        }
+
+        if (itemStore.isItemSkin3()) {
+            MuaSkinWibuButton.setDisable(true);
+        }
+        if (itemStore.isItemSkin2()) {
+            MuaSkinLichLamButton.setDisable(true);
+        }
+        if (itemStore.isItemSkin1()) {
+            MuaSkinDXHButton.setDisable(true);
+        }
 
     }
 }
