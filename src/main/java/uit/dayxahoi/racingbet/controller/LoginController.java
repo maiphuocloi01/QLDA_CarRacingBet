@@ -54,7 +54,7 @@ public class LoginController {
             alert.showAndWait();
             return;
         }
-        User user = new User(txtTenDN.getText(), txtPassword.getText(), 10000);
+        User user = new User(txtTenDN.getText(), txtPassword.getText(), 100);
         ItemStore itemStore = new ItemStore();
         user.setItemStore(itemStore);
         CommonController.getInstance().writeObjectToFile(user, txtTenDN.getText());
