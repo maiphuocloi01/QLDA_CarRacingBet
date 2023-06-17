@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import uit.dayxahoi.racingbet.MyApplication;
 import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.model.DXHButton;
 import uit.dayxahoi.racingbet.model.ItemStore;
@@ -49,8 +50,9 @@ public class MenuViewManager {
 
     public MenuViewManager() {
 
-        if (CommonController.getInstance().isExistData("abc")) {
-            user = (User) CommonController.getInstance().readObjectFromFile("abc");
+        String userName = MyApplication.getInstance().getStorage().userName;
+        if (CommonController.getInstance().isExistData(userName)) {
+            user = (User) CommonController.getInstance().readObjectFromFile(userName);
         } else {
             user = new User("abc", "abc", 100);
             ItemStore itemStore = new ItemStore();

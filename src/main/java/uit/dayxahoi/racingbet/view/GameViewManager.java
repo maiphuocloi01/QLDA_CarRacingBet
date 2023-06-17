@@ -27,6 +27,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
+import uit.dayxahoi.racingbet.MyApplication;
 import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.model.DXHButton;
 import uit.dayxahoi.racingbet.model.User;
@@ -102,9 +103,11 @@ public class GameViewManager {
 
     private IntegerProperty goldObs = new SimpleIntegerProperty();
 
+    String userName = MyApplication.getInstance().getStorage().userName;
+
     public GameViewManager() {
 
-        user = (User) CommonController.getInstance().readObjectFromFile("abc");
+        user = (User) CommonController.getInstance().readObjectFromFile(userName);
         goldObs.setValue(user.getGold());
         loadBackground(mainPane);
         initView();
@@ -370,7 +373,7 @@ public class GameViewManager {
 
                         user.setGold(user.getGold() - bet);
                         goldObs.setValue(user.getGold());
-                        CommonController.getInstance().writeObjectToFile(user, "abc");
+                        CommonController.getInstance().writeObjectToFile(user, userName);
                         // Remove old pane
                         //paneRacing.getChildren().remove(paneRace);
 
@@ -697,7 +700,7 @@ public class GameViewManager {
                     changingLabel.setText(result);
                     user.setGold(user.getGold() + resultBet);
                     goldObs.setValue(user.getGold());
-                    CommonController.getInstance().writeObjectToFile(user, "abc");
+                    CommonController.getInstance().writeObjectToFile(user, userName);
                     // Can't Click reset until race is finish
                     resetButton.setDisable(false);
                     //callBack.runSuccess();
