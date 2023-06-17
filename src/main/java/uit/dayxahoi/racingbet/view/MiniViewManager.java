@@ -25,6 +25,7 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import uit.dayxahoi.racingbet.MyApplication;
 import uit.dayxahoi.racingbet.controller.CommonController;
 import uit.dayxahoi.racingbet.mini.*;
 import uit.dayxahoi.racingbet.model.DXHButton;
@@ -62,8 +63,10 @@ public class MiniViewManager {
 
     private User user;
 
+    String userName = MyApplication.getInstance().getStorage().userName;
+
     public void startGame(Stage primaryStage) {
-        user = (User) CommonController.getInstance().readObjectFromFile("abc");
+        user = (User) CommonController.getInstance().readObjectFromFile(userName);
         // Exit button
         exitButton.setLayoutY((bounds.getMaxY() / 15) - 10);
         exitButton.setLayoutX(13 * bounds.getMaxX() / 14);
@@ -131,7 +134,7 @@ public class MiniViewManager {
         if (tube.getTranslateX() < 35 && incrementOnce) {
             score++;
             user.setGold(user.getGold() + 1);
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
             scoreLabel.setText("Score: " + score);
             incrementOnce = false;
         }

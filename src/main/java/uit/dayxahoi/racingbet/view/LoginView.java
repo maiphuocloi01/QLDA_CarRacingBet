@@ -7,8 +7,16 @@ import javafx.stage.Stage;
 import uit.dayxahoi.racingbet.util.ResourceFile;
 
 public class LoginView {
+
+
+    private Stage mainStage;
+
+    public LoginView() {
+    }
+
     public void startLogin(Stage primaryStage) {
         try {
+            mainStage = primaryStage;
             Parent root = FXMLLoader.load(ResourceFile.getInstance().getResURL("view/Login.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -17,6 +25,10 @@ public class LoginView {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Stage getMainStage() {
+        return mainStage;
     }
 
 }
