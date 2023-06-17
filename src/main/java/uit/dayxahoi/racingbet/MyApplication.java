@@ -1,11 +1,16 @@
 package uit.dayxahoi.racingbet;
 
 import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import uit.dayxahoi.racingbet.util.Storage;
 import uit.dayxahoi.racingbet.view.GameViewManager;
 import uit.dayxahoi.racingbet.view.LoginView;
 import uit.dayxahoi.racingbet.view.MenuViewManager;
+
+import java.io.File;
 
 public class MyApplication extends Application {
            // @Override
@@ -33,6 +38,20 @@ public class MyApplication extends Application {
             primaryStage.setMaximized(true);
             primaryStage.setTitle("Racing Bet");
             primaryStage.show();
+
+            Media media = new Media(getClass().getResource("/uit/dayxahoi/racingbet/sound/gameMusic.wav").toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+            mediaPlayer.setOnEndOfMedia(() -> {
+                mediaPlayer.seek(Duration.ZERO);
+            });
+
+            mediaPlayer.setOnRepeat(() -> {
+                mediaPlayer.seek(Duration.ZERO);
+            });
+
+            mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            mediaPlayer.play();
 
             /*MenuViewManager manager = new MenuViewManager();
             primaryStage = manager.getMainStage();

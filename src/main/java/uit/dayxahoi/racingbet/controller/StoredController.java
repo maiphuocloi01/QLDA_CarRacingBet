@@ -3,6 +3,7 @@ package uit.dayxahoi.racingbet.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -64,10 +65,18 @@ public class StoredController implements Initializable {
         if (user.getGold() >= itemStore.getItemMap2Price()) {
             user.getItemStore().setItemMap2(true);
             user.setGold(user.getGold() - itemStore.getItemMap2Price());
-            itemStore = user.getItemStore();
             CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaMapGayLuButton.setDisable(true);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Mua hàng thành công");
+            alert.setContentText("Cám ơn bạn đã mua hàng");
+            alert.showAndWait();
+
+
+
         } else {
             String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
             int toastMsgTime = 2000; //2 seconds
@@ -88,6 +97,12 @@ public class StoredController implements Initializable {
             CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaMapNongBongButton.setDisable(true);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Mua hàng thành công");
+            alert.setContentText("Cám ơn bạn đã mua hàng");
+            alert.showAndWait();
         } else {
             String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
             int toastMsgTime = 2000; //2 seconds
@@ -113,6 +128,12 @@ public class StoredController implements Initializable {
             CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaSkinLichLamButton.setDisable(true);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Mua hàng thành công");
+            alert.setContentText("Cám ơn bạn đã mua hàng");
+            alert.showAndWait();
         } else {
             String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
             int toastMsgTime = 2000; //2 seconds
@@ -133,6 +154,12 @@ public class StoredController implements Initializable {
             CommonController.getInstance().writeObjectToFile(user, userName);
             HienThiTienLabel.setText(user.getGold() + "$");
             MuaSkinWibuButton.setDisable(true);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText("Mua hàng thành công");
+            alert.setContentText("Cám ơn bạn đã mua hàng");
+            alert.showAndWait();
         } else {
             String toastMsg = "Hổng đủ tiền rồi bạn ơi :(( !";
             int toastMsgTime = 2000; //2 seconds

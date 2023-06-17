@@ -29,7 +29,7 @@
          <font>
             <Font size="18.0" />
          </font></PasswordField>
-      <Button fx:id="DangNhapButton" layoutX="586.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#dangNhap" prefHeight="58.0" prefWidth="185.0" style="-fx-background-color: ORANGE;" text="ĐĂNG NHẬP">
+      <Button fx:id="DangNhapButton" layoutX="494.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#dangNhap" prefHeight="58.0" prefWidth="355.0" style="-fx-background-color: ORANGE;" text="ĐĂNG NHẬP">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
@@ -43,7 +43,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="DangKyButton" layoutX="586.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#dangKy" prefHeight="58.0" prefWidth="185.0" style="-fx-background-color: GREEN;" text="ĐĂNG KÝ" textFill="#d9d2d2">
+      <Button fx:id="DangKyButton" layoutX="494.0" layoutY="439.0" mnemonicParsing="false" onMouseClicked="#dangKy" prefHeight="58.0" prefWidth="355.0" style="-fx-background-color: GREEN;" text="ĐĂNG KÝ" textFill="#d9d2d2">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
