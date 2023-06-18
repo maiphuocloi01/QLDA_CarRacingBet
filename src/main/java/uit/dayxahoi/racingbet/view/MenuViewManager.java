@@ -5,9 +5,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import uit.dayxahoi.racingbet.MyApplication;
@@ -45,6 +51,14 @@ public class MenuViewManager {
 
     User user;
 
+    private static Label goldLabel = new Label();
+
+    private static final String BTN_PRESSED = ResourceFile.getInstance().getImagePath("mute.png");
+    private static final String BTN_FREE = ResourceFile.getInstance().getImagePath("volume.png");
+    String BUTTON_PRESSED_STYLE_2 = "-fx-background-color: transparent; -fx-background-image: url('%s'); -fx-background-size:50px 50px; -fx-background-position: center;".formatted(BTN_PRESSED);
+    String BUTTON_FREE_STYLE_2 = "-fx-background-color: transparent; -fx-background-image: url('%s'); -fx-background-size:50px 50px; -fx-background-position: center;".formatted(BTN_FREE);
+    private Button volumnButton = new Button();
+
     //List<ShipPicker> shipsList;
     //private SHIP choosenShip;
 
@@ -54,15 +68,47 @@ public class MenuViewManager {
         if (CommonController.getInstance().isExistData(userName)) {
             user = (User) CommonController.getInstance().readObjectFromFile(userName);
         } else {
-            user = new User("abc", "abc", 100);
+            user = new User(userName, userName, 100);
             ItemStore itemStore = new ItemStore();
             user.setItemStore(itemStore);
-            CommonController.getInstance().writeObjectToFile(user, "abc");
+            CommonController.getInstance().writeObjectToFile(user, userName);
         }
 
+        // Gold
+        goldLabel.setText("$" + user.getGold());
+        goldLabel.setTextFill(Color.GOLD);
+        goldLabel.setLayoutX((12*bounds.getMaxX() / 15));
+        goldLabel.setLayoutY((bounds.getMaxY() / 15));
+        goldLabel.setFont(Font.font("Impact", FontWeight.BOLD, 60));
+
+        volumnButton.setLayoutY(bounds.getMaxY() / 15);
+        volumnButton.setLayoutX(11 * bounds.getMaxX() / 12);
+        volumnButton.setPrefWidth(50);
+        volumnButton.setPrefHeight(50);
+        if (!MyApplication.getInstance().isPlayingMusic()) {
+            volumnButton.setStyle(BUTTON_PRESSED_STYLE_2);
+        } else {
+            volumnButton.setStyle(BUTTON_FREE_STYLE_2);
+        }
+        volumnButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                //mainStage.close();
+                if (!MyApplication.getInstance().isPlayingMusic()) {
+                    volumnButton.setStyle(BUTTON_FREE_STYLE_2);
+                    MyApplication.getInstance().playMusic();
+                } else {
+                    volumnButton.setStyle(BUTTON_PRESSED_STYLE_2);
+                    MyApplication.getInstance().stopMusic();
+                }
+
+            }
+        });
 
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
+        mainPane.getChildren().add(goldLabel);
+        mainPane.getChildren().add(volumnButton);
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
         mainStage.setScene(mainScene);
@@ -115,6 +161,14 @@ public class MenuViewManager {
         mainStage = stage;
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
+        goldLabel.setText("$" + user.getGold());
+        if (!MyApplication.getInstance().isPlayingMusic()) {
+            volumnButton.setStyle(BUTTON_PRESSED_STYLE_2);
+        } else {
+            volumnButton.setStyle(BUTTON_FREE_STYLE_2);
+        }
+        mainPane.getChildren().add(goldLabel);
+        mainPane.getChildren().add(volumnButton);
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage.setScene(mainScene);
         createButtons();
