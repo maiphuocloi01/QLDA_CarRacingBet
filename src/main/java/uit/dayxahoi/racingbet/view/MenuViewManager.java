@@ -241,7 +241,12 @@ public class MenuViewManager {
 
             @Override
             public void handle(ActionEvent event) {
-                mainStage.close();
+                MyApplication.getInstance().getStorage().userName = null;
+                LoginView manager = new LoginView();
+                manager.startLogin(mainStage);
+                mainStage.setMaximized(true);
+                mainStage.setTitle("Racing Bet");
+                mainStage.show();
             }
         });
 
